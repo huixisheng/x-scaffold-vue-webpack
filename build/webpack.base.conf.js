@@ -7,10 +7,12 @@ function resolve (dir) {
   return path.join(__dirname, '..', dir)
 }
 var entry = utils.getEntries('./src/pages/*/*.js')
+entry['index'] = './src/main.js'
 
 module.exports = {
   entry: entry,
   output: {
+    hashDigestLength: 6,
     path: config.build.assetsRoot,
     filename: '[name].js',
     publicPath: process.env.NODE_ENV === 'production'
@@ -22,6 +24,8 @@ module.exports = {
     alias: {
       'vue$': 'vue/dist/vue.esm.js',
       '@': resolve('src'),
+      'views': resolve('src/views'),
+      'components': resolve('src/components')
     }
   },
   module: {
@@ -29,7 +33,7 @@ module.exports = {
       {
         test: /\.(js|vue)$/,
         loader: 'eslint-loader',
-        enforce: "pre",
+        enforce: 'pre',
         include: [resolve('src'), resolve('test')],
         options: {
           formatter: require('eslint-friendly-formatter')

@@ -35,6 +35,7 @@ module.exports = function () {
     console.log('')
     console.log(chalk.yellow('To use this template, you must update following to modules:'))
     console.log()
+    // eslint-disable-next-line
     for (var i = 0; i < warnings.length; i++) {
       var warning = warnings[i]
       console.log('  ' + warning)

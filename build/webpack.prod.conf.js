@@ -8,6 +8,8 @@ var CopyWebpackPlugin = require('copy-webpack-plugin')
 var HtmlWebpackPlugin = require('html-webpack-plugin')
 var ExtractTextPlugin = require('extract-text-webpack-plugin')
 var OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
+var WebpackAssetsManifest = require('webpack-assets-manifest')
+var pkg = require('../package.json')
 
 var env = process.env.NODE_ENV === 'testing'
   ? require('../config/test.env')
@@ -90,7 +92,26 @@ var webpackConfig = merge(baseWebpackConfig, {
         to: config.build.assetsSubDirectory,
         ignore: ['.*']
       }
-    ])
+    ]),
+    new WebpackAssetsManifest({
+      output: 'webpack-' + pkg.name + '.json',
+      // publicPath: '//cdn.example.com'
+      publicPath: function (val, manifest) {
+        switch (manifest.getExtension(val).substr(1).toLowerCase()) {
+          case 'jpg': case 'jpeg': case 'gif': case 'png': case 'svg':
+            return '//img0.cosmeapp.com/' + val
+            // break
+          case 'css':
+            return '//p.cosmeapp.com/s/webpack/' + val
+            // break
+          case 'js':
+            return '//p.cosmeapp.com/s/webpack/' + val
+            // break
+          default:
+            return '//p.cosmeapp.com/s/webpack/' + val
+        }
+      }
+    })
     // @todo 上传资源服务器
     // transfer-webpack-plugin
     // https://github.com/lyfeyaj/qn-webpack
@@ -123,7 +144,7 @@ if (config.build.bundleAnalyzerReport) {
 
 module.exports = webpackConfig
 
-var pages = utils.getEntries('./src/pages/*/*.html');
+var pages = utils.getEntries('./src/pages/*/*.html')
 
 for (var pathname in pages) {
   // 配置生成的html文件，定义路径等
@@ -132,18 +153,18 @@ for (var pathname in pages) {
     template: pages[pathname],   // 模板路径
     inject: true,              // js插入位置
     minify: {
-        removeComments: true,
-        collapseWhitespace: true,
-        removeAttributeQuotes: true
+      removeComments: true,
+      collapseWhitespace: true,
+      removeAttributeQuotes: true
         // more options:
         // https://github.com/kangax/html-minifier#options-quick-reference
-      },
+    },
     // necessary to consistently work with multiple chunks via CommonsChunkPlugin
-    chunksSortMode: 'dependency',
-  };
-  if (pathname in module.exports.entry) {    //为页面导入所需的依赖
-    conf.chunks = ['vendor','manifest', pathname];
-    conf.hash = false;
+    chunksSortMode: 'dependency'
   }
-  module.exports.plugins.push(new HtmlWebpackPlugin(conf));
+  if (pathname in module.exports.entry) {    // 为页面导入所需的依赖
+    conf.chunks = ['vendor', 'manifest', pathname]
+    conf.hash = false
+  }
+  module.exports.plugins.push(new HtmlWebpackPlugin(conf))
 }

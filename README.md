@@ -3,19 +3,9 @@
 > 根据`vue init webpack`生成的模块修改，支持多页面配置
 
 
-## 修改 ##
+## 安装 ##
 
-2017-03-09
-
-- [+] 支持了`debug`的js和html文件生成
-- [+] 根据`vue init webpack`生成的模板配置成支持多页面
-
-## todo ##
-
-- [ ] 添加资源文件上传配置
-- [ ] 集成到vue自定义模板生成
-- [ ] 局域网ip访问
-- [ ] Weinre？
+  fis3 init huixisheng/x-scaffold-vue-webpack
 
 
 ## Build Setup
@@ -45,6 +35,21 @@ npm test
 
 For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
 
+## 问题 ##
+
+```
+warning  File ignored because of a matching ignore pattern. Use "--no-ignore" to override
+```
+- https://github.com/eslint/eslint/issues/5623
+
+## stylelint ##
+- https://github.com/JaKXz/stylelint-webpack-plugin#options
+- https://lzw.me/a/css-lint-stylelint-stylefmt.html
+- http://www.jianshu.com/p/caccf4d2c88d
+- https://blog.1stg.me/2016/07/07/start-using-linters-Eslint-and-Stylelint/
+
+sublime 插件
+- stylefmt 和 SublimeLinter-contrib-stylelint
 
 ## 参考 ##
 

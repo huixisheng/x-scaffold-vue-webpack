@@ -1,7 +1,7 @@
 var path = require('path')
 var config = require('../config')
 var ExtractTextPlugin = require('extract-text-webpack-plugin')
-var glob = require('glob');
+var glob = require('glob')
 
 exports.assetsPath = function (_path) {
   var assetsSubDirectory = process.env.NODE_ENV === 'production'
@@ -71,17 +71,17 @@ exports.styleLoaders = function (options) {
   return output
 }
 
-
 exports.getEntries = function (globPath) {
-  var entries = {},
-    basename, tmp, pathname;
+  var entries = {}
+  var basename
+  var tmp
+  var pathname
 
   glob.sync(globPath).forEach(function (entry) {
-    basename = path.basename(entry, path.extname(entry));
-    tmp = entry.split('/').splice(-3);
-    pathname = tmp.splice(1, 1) + '/' + basename;
-    entries[pathname] = entry;
-  });
-  return entries;
+    basename = path.basename(entry, path.extname(entry))
+    tmp = entry.split('/').splice(-3)
+    pathname = tmp.splice(1, 1) + '/' + basename
+    entries[pathname] = entry
+  })
+  return entries
 }
-

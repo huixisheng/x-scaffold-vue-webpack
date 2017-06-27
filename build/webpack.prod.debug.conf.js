@@ -119,7 +119,7 @@ if (config.build.bundleAnalyzerReport) {
 
 module.exports = webpackConfig
 
-var pages = utils.getEntries('./src/pages/*/*.html');
+var pages = utils.getEntries('./src/pages/*/*.html')
 
 for (var pathname in pages) {
   // 配置生成的html文件，定义路径等
@@ -135,11 +135,11 @@ for (var pathname in pages) {
     //     // https://github.com/kangax/html-minifier#options-quick-reference
     //   },
     // // necessary to consistently work with multiple chunks via CommonsChunkPlugin
-    chunksSortMode: 'dependency',
-  };
-  if (pathname in module.exports.entry) {    //为页面导入所需的依赖
-    conf.chunks = ['vendor','manifest', pathname];
-    conf.hash = false;
+    chunksSortMode: 'dependency'
   }
-  module.exports.plugins.push(new HtmlWebpackPlugin(conf));
+  if (pathname in module.exports.entry) {    // 为页面导入所需的依赖
+    conf.chunks = ['vendor', 'manifest', pathname]
+    conf.hash = false
+  }
+  module.exports.plugins.push(new HtmlWebpackPlugin(conf))
 }
