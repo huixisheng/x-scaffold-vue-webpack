@@ -51,6 +51,16 @@ warning  File ignored because of a matching ignore pattern. Use "--no-ignore" to
 sublime 插件
 - stylefmt 和 SublimeLinter-contrib-stylelint
 
+## Mock ##
+- https://www.npmjs.com/search?q=mock%20server&page=1&ranking=optimal
+- https://www.npmjs.com/package/json-server
+- https://www.npmjs.com/package/mock-dev-server
+- https://devhub.io/search?keyword=mock
+- https://github.com/Houfeng/faked?spm=5176.100239.0.0.O5QMy1
+- https://juejin.im/entry/5862059f1b69e675fcd44533
+- https://www.google.com/search?q=mock+server&ei=U2pSWYuSCcSJ0gLPspmoAw&start=0&sa=N&biw=1280&bih=703
+- https://www.zhihu.com/question/35436669
+
 ## 参考 ##
 
 - https://github.com/cnu4/Webpack-Vue-MultiplePage
