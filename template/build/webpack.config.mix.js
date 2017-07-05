@@ -29,10 +29,10 @@ class DoneCallbackPlugin {
   }
 }
 
-module.exports = function (mix, platformUrl) {
+module.exports = function (mix, platformUrl, projectName) {
   const rootPath = Mix.paths.rootPath
-  mix.setPublicPath('public/dist/project1/')
-  mix.js('assets/project1/src/main.js', './')
+  mix.setPublicPath(`public/dist/${projectName}/`)
+  mix.js(`assets/${projectName}/src/main.js`, './')
       .version()
       .then((stats) => {
         // console.log('rootPath:%s', rootPath)
@@ -54,7 +54,8 @@ module.exports = function (mix, platformUrl) {
   plugins.push(
     new DoneCallbackPlugin((stats) => {
       if (process.env.NODE_ENV === 'production') {
-        let srcResource = path.join(rootPath, 'public/dist/project1')
+        let distProject = `public/dist/${projectName}`
+        let srcResource = path.join(rootPath, distProject)
         let distCdnAssets = path.join(path.dirname(rootPath), 'cdnAssets/s/admin-lavavel/')
         deployAssets(srcResource, distCdnAssets)
         console.log(Object.keys(stats))
