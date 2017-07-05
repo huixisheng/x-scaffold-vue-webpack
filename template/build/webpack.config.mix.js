@@ -33,10 +33,20 @@ module.exports = function (mix, platformUrl, projectName) {
   const rootPath = Mix.paths.rootPath
   mix.setPublicPath(`public/dist/${projectName}/`)
   mix.js(`assets/${projectName}/src/main.js`, './')
+      // @todo
+      .styles([`assets/${projectName}/src/assets/app.css`], `public/dist/${projectName}/app.css`)
       .version()
+      // .options({
+      //   extractVueStyles: false,
+      //   processCssUrls: true,
+      //   uglify: {},
+      //   purifyCss: false,
+      //   // purifyCss: {},
+      //   postCss: [require('autoprefixer')],
+      //   clearConsole: false
+      // })
       .then((stats) => {
         // console.log('rootPath:%s', rootPath)
-
       })
 
   let plugins = []
@@ -88,7 +98,6 @@ module.exports = function (mix, platformUrl, projectName) {
   })
 
   if (process.env.NODE_ENV === 'development') {
-    // mix.browserSync('a.cqc.cosmeapp.net');
     mix.browserSync({
       // host: "192.168.10.10",
       socket: {
@@ -97,14 +106,11 @@ module.exports = function (mix, platformUrl, projectName) {
       // @todo 读取.env
       proxy: getDomain(platformUrl),
       files: [
-        'app/**/*.php',
-        'src/***/*.vue',
-        'src/***/*.css',
-        'src/***/*.js',
-        'Modules/**/Resources/views/**/*.php',
-        'Modules/**/Resources/assets/js/**/*.js',
-        'Modules/**/Resources/assets/js/**/*.vue',
-        'Modules/**/Resources/assets/css/**/*.css'
+        'assets/**/src/***/*.vue',
+        'assets/**/src/***/*.css',
+        'assets/**/src/***/*.js',
+        'Modules/**/Http/***/*.php',
+        'Modules/**/Resources/views/**/*.php'
       ]
     })
   }
