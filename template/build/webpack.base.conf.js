@@ -2,6 +2,7 @@ var path = require('path')
 var utils = require('./utils')
 var config = require('../config')
 var vueLoaderConfig = require('./vue-loader.conf')
+var ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 function resolve (dir) {
   return path.join(__dirname, '..', dir)
@@ -68,7 +69,22 @@ module.exports = {
           limit: 10000,
           name: utils.assetsPath('fonts/[name].[hash:7].[ext]')
         }
-      }
+      },
+      /**
+       * ERROR  Failed to compile with 3 errors                                                             22:54:22
+        These dependencies were not found:
+
+        * assets/app.css in ./src/main.js
+        * mint-ui/lib/style.css in ./src/main-page.js
+        * normalize.css/normalize.css in ./src/main-page.js
+
+        To install them, you can run: npm install --save assets/app.css mint-ui/lib/style.css normalize.css/normalize.css
+        (node:40847) DeprecationWarning: Chunk.modules is deprecated. Use Chunk.getNumberOfModules/mapModules/forEachModule/containsModule instead.
+       */
+      // {
+      //   test: /\.css$/,
+      //   loader: ExtractTextPlugin.extract(["css-loader", "postcss-loader"])
+      // },
     ]
   }
 }

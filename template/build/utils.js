@@ -3,6 +3,7 @@ var config = require('../config')
 var ExtractTextPlugin = require('extract-text-webpack-plugin')
 var glob = require('glob')
 
+
 exports.assetsPath = function (_path) {
   var assetsSubDirectory = process.env.NODE_ENV === 'production'
     ? config.build.assetsSubDirectory
@@ -21,9 +22,19 @@ exports.cssLoaders = function (options) {
     }
   }
 
+  // https://github.com/vuejs/vue-loader/issues/424
+  // @todo https://github.com/vuejs/vue-loader/search?q=autoprefixer+&type=Issues&utf8=%E2%9C%93
+  // https://github.com/vuejs/vue-loader/issues/440
+  var postcssLoader = {
+    loader: 'postcss-loader', //解决.js文件require/import autoprefixer问题
+    options:{
+      sourceMap: true //消除警告
+    },
+  }
+
   // generate loader string to be used with extract text plugin
   function generateLoaders (loader, loaderOptions) {
-    var loaders = [cssLoader]
+    var loaders = [cssLoader, postcssLoader]
     if (loader) {
       loaders.push({
         loader: loader + '-loader',
@@ -84,4 +95,20 @@ exports.getEntries = function (globPath) {
     entries[pathname] = entry
   })
   return entries
+}
+
+// https://www.npmjs.com/package/ip
+exports.getIp = function (){
+  var os = require('os');
+  var interfaces = os.networkInterfaces();
+  var IPv4 = '127.0.0.1';
+  for (var key in interfaces) {
+    var alias = 0;
+    interfaces[key].forEach(function(details){
+      if (details.family == 'IPv4' && key == 'en0'  ) {
+          IPv4 = details.address;
+      }
+    });
+  }
+  return IPv4;
 }

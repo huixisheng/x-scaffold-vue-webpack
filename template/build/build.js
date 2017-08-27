@@ -20,14 +20,15 @@ rm(path.join(config.build.assetsRoot, config.build.assetsSubDirectory), err => {
   webpack([webpackConfig, webpackConfigDebug], function (err, stats) {
     spinner.stop()
     if (err) throw err
-    buildCdn.init()
 
     process.stdout.write(stats.toString({
       colors: true,
-      modules: false,
-      children: false,
-      chunks: false,
-      chunkModules: false
+      modules: true,
+      children: true,
+      chunks: true,
+      timings: true,
+      performance: true,
+      chunkModules: true,
     }) + '\n\n')
 
     console.log(chalk.cyan('  Build complete.\n'))
@@ -35,5 +36,6 @@ rm(path.join(config.build.assetsRoot, config.build.assetsSubDirectory), err => {
       '  Tip: built files are meant to be served over an HTTP server.\n' +
       '  Opening index.html over file:// won\'t work.\n'
     ))
+    buildCdn.init()
   })
 })

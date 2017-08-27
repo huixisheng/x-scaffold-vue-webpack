@@ -10,6 +10,13 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin')
 var OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
 var WebpackAssetsManifest = require('webpack-assets-manifest')
 var pkg = require('../package.json')
+var DashboardPlugin = require('webpack-dashboard/plugin')
+
+var ParallelUglifyPlugin = require('webpack-parallel-uglify-plugin');
+var StatsWriterPlugin = require("webpack-stats-plugin").StatsWriterPlugin;
+
+const os = require('os')
+const UglifyJsParallelPlugin = require('webpack-uglify-parallel')
 
 var env = process.env.NODE_ENV === 'testing'
   ? require('../config/test.env')
@@ -29,16 +36,43 @@ var webpackConfig = merge(baseWebpackConfig, {
     chunkFilename: utils.assetsPath('js/[id].[chunkhash].js')
   },
   plugins: [
+    new StatsWriterPlugin({
+      filename: 'stats.json' // Default
+    }),
     // http://vuejs.github.io/vue-loader/en/workflow/production.html
     new webpack.DefinePlugin({
       'process.env': env
     }),
-    new webpack.optimize.UglifyJsPlugin({
-      compress: {
-        warnings: false
+    // https://www.404forest.com/2017/06/12/optimie-webpack-bundle-performance/#3-4-使用-webpack-uglify-parallel-并行执行压缩
+    new UglifyJsParallelPlugin({
+      workers: os.cpus().length,
+      output: {
+        comments: false,
       },
-      sourceMap: true
+      compress: {
+        warnings: false,
+      },
+      sourceMap: false
     }),
+
+    // new ParallelUglifyPlugin({
+    //   cacheDir: '.cache/',
+    //   uglifyJS:{
+    //     output: {
+    //       comments: false
+    //     },
+    //     compress: {
+    //       warnings: false
+    //     }
+    //   }
+    // }),
+
+    // new webpack.optimize.UglifyJsPlugin({
+    //   compress: {
+    //     warnings: false
+    //   },
+    //   sourceMap: true
+    // }),
     // extract css into its own file
     new ExtractTextPlugin({
       filename: utils.assetsPath('css/[name].[contenthash].css')
@@ -111,7 +145,8 @@ var webpackConfig = merge(baseWebpackConfig, {
             return '//p.cosmeapp.com/s/webpack/' + val
         }
       }
-    })
+    }),
+    // new DashboardPlugin({ port: 10001 })
     // @todo 上传资源服务器
     // transfer-webpack-plugin
     // https://github.com/lyfeyaj/qn-webpack
@@ -137,13 +172,9 @@ if (config.build.productionGzip) {
   )
 }
 
-if (config.build.bundleAnalyzerReport) {
-  var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
-  webpackConfig.plugins.push(new BundleAnalyzerPlugin())
-}
-
 module.exports = webpackConfig
 
+// module.exports.plugins.push()
 var pages = utils.getEntries('./src/pages/*/*.html')
 
 for (var pathname in pages) {
@@ -167,4 +198,11 @@ for (var pathname in pages) {
     conf.hash = false
   }
   module.exports.plugins.push(new HtmlWebpackPlugin(conf))
+}
+
+if (config.build.bundleAnalyzerReport) {
+  var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+  webpackConfig.plugins.push(new BundleAnalyzerPlugin({
+    analyzerPort: 10000,
+  }))
 }

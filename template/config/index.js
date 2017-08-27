@@ -1,5 +1,24 @@
 // see http://vuejs-templates.github.io/webpack for documentation.
 var path = require('path')
+// var getIp = require('../build/utils').getIp;
+
+// https://www.npmjs.com/package/ip
+function getIp(){
+  var os = require('os');
+  var interfaces = os.networkInterfaces();
+  var IPv4 = '127.0.0.1';
+  for (var key in interfaces) {
+    var alias = 0;
+    interfaces[key].forEach(function(details){
+      if (details.family == 'IPv4' && key == 'en0'  ) {
+          IPv4 = details.address;
+      }
+    });
+  }
+  return IPv4;
+}
+
+const PORT = 8080;
 
 module.exports = {
   build: {
@@ -8,7 +27,7 @@ module.exports = {
     assetsRoot: path.resolve(__dirname, '../dist'),
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
-    productionSourceMap: true,
+    productionSourceMap: false,
     // Gzip off by default as many popular static hosts such as
     // Surge or Netlify already gzip all static assets for you.
     // Before setting to `true`, make sure to:
@@ -23,11 +42,21 @@ module.exports = {
   },
   dev: {
     env: require('./dev.env'),
-    port: 8080,
+    port: PORT,
+    index: path.resolve(__dirname, '../dist/index.html'),
     autoOpenBrowser: true,
+    assetsRoot: path.resolve(__dirname, '../dist'),
     assetsSubDirectory: 'static',
-    assetsPublicPath: '/',
-    proxyTable: {},
+    assetsPublicPath: `//${getIp()}:${PORT}/`,
+    proxyTable: {
+      '/cardapi': {
+        target: 'http://xx.xx.com',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/cardapi': '/cardapi'
+        },
+      },
+    },
     // CSS Sourcemaps off by default because relative paths are "buggy"
     // with this option, according to the CSS-Loader README
     // (https://github.com/webpack/css-loader#sourcemaps)

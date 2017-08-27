@@ -1,15 +1,34 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import Hello from 'views/hello/Hello';
+
+const HomeIndex = () => import('views/home/index');
 
 Vue.use(Router);
 
-export default new Router({
-  routes: [
-    {
-      path: '/',
-      name: 'Hello',
-      component: Hello,
+const routes = [
+  {
+    path: '/home/index',
+    alias: '/',
+    name: 'index',
+    meta: {
+      title: '首页',
     },
-  ],
+    component: HomeIndex,
+  },
+];
+
+
+if (process.env.NODE_ENV === 'development') {
+  routes.push({
+    path: '/demo',
+    name: 'Hello',
+    // eslint-disable-next-line
+    component: require('views/hello/hello'),
+  });
+}
+
+export default new Router({
+  mode: 'history',
+  routes,
+  linkActiveClass: 'router-active',
 });

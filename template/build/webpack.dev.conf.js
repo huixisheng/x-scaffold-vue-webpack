@@ -2,10 +2,19 @@ let utils = require('./utils')
 let webpack = require('webpack')
 let config = require('../config')
 let merge = require('webpack-merge')
+var path = require('path')
+var WebpackAssetsManifest = require('webpack-assets-manifest')
+var ExtractTextPlugin = require('extract-text-webpack-plugin')
 let baseWebpackConfig = require('./webpack.base.conf')
 let HtmlWebpackPlugin = require('html-webpack-plugin')
 let FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 let StyleLintPlugin = require('stylelint-webpack-plugin')
+
+var pkg = require('../package.json')
+var xConfig = require('x-config-deploy').getConfig()
+var devMapPath = path.join(xConfig.mapCosmeapi, `webpack-${pkg.name}-test.json`)
+var port = process.env.PORT || config.dev.port
+console.log(devMapPath);
 
 // add hot-reload related code to entry chunks
 Object.keys(baseWebpackConfig.entry).forEach(function (name) {
@@ -14,7 +23,15 @@ Object.keys(baseWebpackConfig.entry).forEach(function (name) {
 
 module.exports = merge(baseWebpackConfig, {
   module: {
-    rules: utils.styleLoaders({ sourceMap: config.dev.cssSourceMap })
+    rules: utils.styleLoaders({
+      sourceMap: config.dev.cssSourceMap,
+      extract: true
+    })
+  },
+  output: {
+    path: config.build.assetsRoot,
+    filename: utils.assetsPath('js/[name].js'),
+    chunkFilename: utils.assetsPath('js/[id].js')
   },
   // cheap-module-eval-source-map is faster for development
   devtool: '#cheap-module-eval-source-map',
@@ -27,6 +44,54 @@ module.exports = merge(baseWebpackConfig, {
     new webpack.DefinePlugin({
       'process.env': config.dev.env
     }),
+
+    // new OptimizeCSSPlugin(),
+    new ExtractTextPlugin({
+      filename: utils.assetsPath('css/[name].[contenthash].css')
+    }),
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'vendor',
+      minChunks: function (module, count) {
+        // any required modules inside node_modules are extracted to vendor
+        return (
+          module.resource &&
+          /\.js$/.test(module.resource) &&
+          module.resource.indexOf(
+            path.join(__dirname, '../node_modules')
+          ) === 0
+        )
+      }
+    }),
+    // extract webpack runtime and module manifest to its own file in order to
+    // prevent vendor hash from being updated whenever app bundle is updated
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'manifest',
+      chunks: ['vendor']
+    }),
+    new WebpackAssetsManifest({
+      output: devMapPath,
+      writeToDisk: true,
+      publicPath: function (val, manifest) {
+        switch (manifest.getExtension(val).substr(1).toLowerCase()) {
+          case 'jpg': case 'jpeg': case 'gif': case 'png': case 'svg':
+            return '//' + utils.getIp() +':' + port + '/' + val
+            // break
+          case 'css':
+            return '//' + utils.getIp() +':' + port + '/' + val
+            // break
+          case 'js':
+            return '//' + utils.getIp() +':' + port + '/' + val
+            // break
+          default:
+            return '//' + utils.getIp() +':' + port + '/' + val
+        }
+      },
+      done: function(manifest, stats) {
+        console.log(`The manifest has been written to ${manifest.getOutputPath()}`);
+        // console.log(stats); // Compilation stats
+      }
+    }),
+
     // https://github.com/glenjamin/webpack-hot-middleware#installation--usage
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),
