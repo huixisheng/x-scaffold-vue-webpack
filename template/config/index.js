@@ -63,5 +63,21 @@ module.exports = {
     // In our experience, they generally work as expected,
     // just be aware of this issue when enabling this option.
     cssSourceMap: false
+  },
+  // 配置dll
+  dll: {
+    entry: {
+      vendor: [
+        // 'vue/dist/vue.common.js',
+        'vue/dist/vue.esm.js',
+        'vue-router',
+        'mint-ui/lib/mint-ui.common.js',
+        'core-js',
+        'axios',
+        'vue-lazyload',
+        'v-tap',
+        'qs',
+      ],
+    }
   }
 }

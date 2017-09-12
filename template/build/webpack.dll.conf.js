@@ -1,24 +1,14 @@
 var path = require('path')
 var webpack = require('webpack')
 var HtmlWebpackPlugin = require('html-webpack-plugin')
+var config = require('../config/index')
 
 module.exports = {
-  entry: {
-    vendor: [
-      // 'vue/dist/vue.common.js',
-      'vue/dist/vue.esm.js',
-      'vue-router',
-      'mint-ui/lib/mint-ui.common.js',
-      'core-js',
-      'axios',
-      'vue-lazyload',
-      'v-tap',
-      'qs',
-    ]
-  },
+  entry: config.dll.entry,
   output: {
+    hashDigestLength: 6,
     path: path.resolve(__dirname, '../static/js'),
-    filename: '[name].dll.js',
+    filename: '[name]-dll-[chunkhash].js',
     library: '[name]_library'
   },
   module: {
