@@ -1,1 +1,3 @@
-# 项目说明
+# {{ name }}
+
+> {{ description }}

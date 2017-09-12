@@ -1,6 +1,6 @@
 // see http://vuejs-templates.github.io/webpack for documentation.
 var path = require('path')
-// var getIp = require('../build/utils').getIp;
+// var getIp = require('../build/utils').getIp; // 出现死循环
 
 // https://www.npmjs.com/package/ip
 function getIp(){
@@ -26,7 +26,7 @@ module.exports = {
     index: path.resolve(__dirname, '../dist/index.html'),
     assetsRoot: path.resolve(__dirname, '../dist'),
     assetsSubDirectory: 'static',
-    assetsPublicPath: '/',
+    assetsPublicPath: '//p.cosmeapp.com/s/webpack/',
     productionSourceMap: false,
     // Gzip off by default as many popular static hosts such as
     // Surge or Netlify already gzip all static assets for you.

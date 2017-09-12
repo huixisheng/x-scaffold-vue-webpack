@@ -11,9 +11,12 @@ var OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
 var WebpackAssetsManifest = require('webpack-assets-manifest')
 var pkg = require('../package.json')
 var DashboardPlugin = require('webpack-dashboard/plugin')
+var WebpackSftpClient = require('webpack-sftp-client')
+var xConfig = require('x-config-deploy').getConfig()
 
 var ParallelUglifyPlugin = require('webpack-parallel-uglify-plugin');
 var StatsWriterPlugin = require("webpack-stats-plugin").StatsWriterPlugin;
+var assetsManifestFile = 'webpack-' + pkg.name + '.json';
 
 const os = require('os')
 const UglifyJsParallelPlugin = require('webpack-uglify-parallel')
@@ -128,7 +131,7 @@ var webpackConfig = merge(baseWebpackConfig, {
       }
     ]),
     new WebpackAssetsManifest({
-      output: 'webpack-' + pkg.name + '.json',
+      output: assetsManifestFile,
       // publicPath: '//cdn.example.com'
       publicPath: function (val, manifest) {
         switch (manifest.getExtension(val).substr(1).toLowerCase()) {
@@ -146,6 +149,13 @@ var webpackConfig = merge(baseWebpackConfig, {
         }
       }
     }),
+    new WebpackSftpClient(Object.assign(xConfig.sftp,
+    {
+      path: path.resolve(__dirname, '../dist/' + assetsManifestFile),
+      remotePath: '/home/ykq/',
+      // Show details of uploading for files
+      verbose: true
+    }))
     // new DashboardPlugin({ port: 10001 })
     // @todo 上传资源服务器
     // transfer-webpack-plugin
