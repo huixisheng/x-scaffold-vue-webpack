@@ -149,13 +149,13 @@ var webpackConfig = merge(baseWebpackConfig, {
         }
       }
     }),
-    new WebpackSftpClient(Object.assign(xConfig.sftp,
-    {
-      path: path.resolve(__dirname, '../dist/' + assetsManifestFile),
-      remotePath: '/home/ykq/',
-      // Show details of uploading for files
-      verbose: true
-    }))
+    // new WebpackSftpClient(Object.assign(xConfig.sftp,
+    // {
+    //   path: path.resolve(__dirname, '../dist/' + assetsManifestFile),
+    //   remotePath: '/home/ykq/',
+    //   // Show details of uploading for files
+    //   verbose: true
+    // }))
     // new DashboardPlugin({ port: 10001 })
     // @todo 上传资源服务器
     // transfer-webpack-plugin
@@ -208,6 +208,10 @@ for (var pathname in pages) {
     conf.hash = false
   }
   module.exports.plugins.push(new HtmlWebpackPlugin(conf))
+  var debugConf = Object.assign({}, conf);
+  delete debugConf.minify;
+  debugConf.filename = pathname + '-debug.html';
+  module.exports.plugins.push(new HtmlWebpackPlugin(debugConf));
 }
 
 if (config.build.bundleAnalyzerReport) {
