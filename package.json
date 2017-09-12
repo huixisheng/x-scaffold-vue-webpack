@@ -3,10 +3,8 @@
   "version": "0.0.1",
   "license": "MIT",
   "description": "根据`vue init webpack`生成的模块修改，支持多页面配置",
-  "scripts": {
-
-  },
+  "scripts": {},
   "devDependencies": {
-    "vue-cli": "^2.8.1"
+    "vue-cli": "^2.8.2"
   }
 }
