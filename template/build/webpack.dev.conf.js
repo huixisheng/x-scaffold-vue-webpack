@@ -10,9 +10,11 @@ let HtmlWebpackPlugin = require('html-webpack-plugin')
 let FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 let StyleLintPlugin = require('stylelint-webpack-plugin')
 
+const RootPaths = require('./RootPaths');
+const rootPathsInstance = new RootPaths();
 var pkg = require('../package.json')
-var xConfig = require('x-config-deploy').getConfig()
-var devMapPath = path.join(xConfig.mapCosmeapi, `webpack-${pkg.name}-test.json`)
+// var xConfig = require('x-config-deploy').getConfig()
+var devMapPath = path.join(rootPathsInstance.getModulesAssetsPath('cosmeapi', 'Api'), `webpack-${pkg.name}-test.json`)
 var port = process.env.PORT || config.dev.port
 console.log(devMapPath);
 

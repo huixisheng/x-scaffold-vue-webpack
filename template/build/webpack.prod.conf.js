@@ -136,16 +136,16 @@ var webpackConfig = merge(baseWebpackConfig, {
       publicPath: function (val, manifest) {
         switch (manifest.getExtension(val).substr(1).toLowerCase()) {
           case 'jpg': case 'jpeg': case 'gif': case 'png': case 'svg':
-            return '//img0.cosmeapp.com/' + val
+            return config.assetsPublicPath + val
             // break
           case 'css':
-            return '//p.cosmeapp.com/s/webpack/' + val
+            return config.assetsPublicPath + val
             // break
           case 'js':
-            return '//p.cosmeapp.com/s/webpack/' + val
+            return config.assetsPublicPath + val
             // break
           default:
-            return '//p.cosmeapp.com/s/webpack/' + val
+            return config.assetsPublicPath + val
         }
       }
     }),
