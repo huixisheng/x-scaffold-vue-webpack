@@ -14,7 +14,7 @@ const RootPaths = require('./RootPaths');
 const rootPathsInstance = new RootPaths();
 var pkg = require('../package.json')
 // var xConfig = require('x-config-deploy').getConfig()
-var devMapPath = path.join(rootPathsInstance.getModulesAssetsPath('cosmeapi', 'Api'), `webpack-${pkg.name}-test.json`)
+var devMapPath = path.join(rootPathsInstance.getModulesAssetsPath('cosmeapi', 'Api'), `test/webpack-${pkg.name}.json`)
 var port = process.env.PORT || config.dev.port
 console.log(devMapPath);
 

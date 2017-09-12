@@ -27,29 +27,35 @@ $ npm run dev
 
 ### 项目构建 ###
 
+统一项目路径
+
 ``` bash
-npm run build
+$ ln -s ~/Mzxd/** ~/ProjectRoot/
+```
+
+``` bash
+$ npm run build
 ```
 
 ### 项目构建支持生成图表依赖分析 ###
 
 ```bash
-npm run build --report
+$ npm run build --report
 ```
 
 ### run unit tests ###
 
 ```bash
-npm run unit
+$ npm run unit
 ```
 
 ### run e2e tests ###
 
 ```bash
-npm run e2e
+$ npm run e2e
 ```
 
 ### run all tests
 ```bash
-npm test
+$ npm test
 ```
