@@ -16,6 +16,24 @@ warning  File ignored because of a matching ignore pattern. Use "--no-ignore" to
 ```
 - https://github.com/eslint/eslint/issues/5623
 
+```
+search: {
+  immediate: true,
+  handler(val) {
+    console.log('watch search: ', val);
+    this.getList();
+    this.optCount = val;
+   },
+   deep: true,
+ },
+```
+
+```
+for..in loops iterate over the entire prototype chain, which is virtually never what you want. Use Object.{keys,values,entries}, and iterate over the resulting array no-restricted-syntax
+```
+- https://github.com/airbnb/javascript/issues/851
+- https://github.com/airbnb/javascript/issues/1271
+
 ## stylelint ##
 - https://github.com/JaKXz/stylelint-webpack-plugin#options
 - https://lzw.me/a/css-lint-stylelint-stylefmt.html
