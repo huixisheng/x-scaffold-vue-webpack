@@ -12,6 +12,7 @@ module.exports = {
   ],
   env: {
     browser: true,
+    node: true,
   },
   globals: {
 
@@ -24,6 +25,11 @@ module.exports = {
     },
   },
   rules: {
-
+    // https://github.com/benmosher/eslint-plugin-import/blob/master/docs/rules/no-extraneous-dependencies.md
+    'import/no-extraneous-dependencies': ['error', {'devDependencies': true, 'optionalDependencies': false, 'peerDependencies': false}],
+    // 'no-unused-vars': 'off',
+    'global-require': 'off',
+    // https://eslint.cn/docs/rules/guard-for-in
+    'guard-for-in': 'off',
   },
 };

@@ -1,5 +1,7 @@
 const path = require('path');
 const fs = require('fs');
+const url = require('url');
+const dotenv = require('dotenv');
 
 class RootPaths {
   constructor() {
@@ -8,23 +10,22 @@ class RootPaths {
   }
 
   // 用户的目录文件
-  getUserHome(){
-      var userHomeDir = process.env.HOME || process.env.USERPROFILE;
-      if (!userHomeDir) {
-          userHomeDir = process.env.HOMEDRIVE + process.env.HOMEPATH;
-      }
-      return userHomeDir;
+  static getUserHome() {
+    let userHomeDir = process.env.HOME || process.env.USERPROFILE;
+    if (!userHomeDir) {
+      userHomeDir = process.env.HOMEDRIVE + process.env.HOMEPATH;
+    }
+    return userHomeDir;
   }
 
   getProjectRoot(projectName) {
     const projectPath = path.join(this.rootPath, projectName);
     const stat = fs.statSync(projectPath);
-    if (stat.isDirectory()) {
-      return projectPath;
-    } else {
+    if (!stat.isDirectory()) {
       console.log('%s不存在', projectPath);
       process.exit();
     }
+    return projectPath;
   }
 
   getModulesAssetsPath(projectName, module) {
@@ -42,17 +43,13 @@ class RootPaths {
   }
 
   getProjectDomain(projectName, platformUrl) {
-    const url = require('url')
-    const fs = require('fs')
-    const dotenv = require('dotenv')
-    const path = require('path')
-    const envPath = path.join(this.getProjectRoot(projectName), '.env')
-    let envConfig = dotenv.parse(fs.readFileSync(envPath))
+    const envPath = path.join(this.getProjectRoot(projectName), '.env');
+    let envConfig = dotenv.parse(fs.readFileSync(envPath));
     if (envConfig['APP_ENV']) {
-      const AppEnvPath = path.join(this.getProjectRoot(projectName), `.${envConfig['APP_ENV']}.env`)
-      envConfig = Object.assign(envConfig, dotenv.parse(fs.readFileSync(AppEnvPath)))
+      const AppEnvPath = path.join(this.getProjectRoot(projectName), `.${envConfig['APP_ENV']}.env`);
+      envConfig = Object.assign(envConfig, dotenv.parse(fs.readFileSync(AppEnvPath)));
     }
-    const href = url.parse(envConfig[platformUrl])
+    const href = url.parse(envConfig[platformUrl]);
     // @todo 根据platform获取各个平台的domain
 
     // const path = require('path')
@@ -65,8 +62,8 @@ class RootPaths {
     //   domain = p1
     //   return p1
     // })
-    console.log(' envConfig[platformUrl]', href.hostname)
-    return href.hostname
+    console.log(' envConfig[platformUrl]', href.hostname);
+    return href.hostname;
   }
 
 }

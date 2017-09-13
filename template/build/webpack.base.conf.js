@@ -1,25 +1,25 @@
-var path = require('path')
-var utils = require('./utils')
-var config = require('../config')
-var vueLoaderConfig = require('./vue-loader.conf')
-var ExtractTextPlugin = require('extract-text-webpack-plugin')
-var webpack = require('webpack')
+const path = require('path');
+const utils = require('./utils');
+const config = require('../config');
+const vueLoaderConfig = require('./vue-loader.conf');
+// const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const webpack = require('webpack');
 
-function resolve (dir) {
-  return path.join(__dirname, '..', dir)
+function resolve(dir) {
+  return path.join(__dirname, '..', dir);
 }
-var entry = utils.getEntries('./src/pages/*/*.js')
-entry['index'] = './src/main.js'
-
+const entry = utils.getEntries('./src/pages/*/*.js');
+entry['index'] = './src/main.js';
+/* eslint-disable max-len */
 module.exports = {
-  entry: entry,
+  entry,
   output: {
     hashDigestLength: 6,
     path: config.build.assetsRoot,
     filename: '[name].js',
     publicPath: process.env.NODE_ENV === 'production'
       ? config.build.assetsPublicPath
-      : config.dev.assetsPublicPath
+      : config.dev.assetsPublicPath,
   },
   resolve: {
     modules: [
@@ -28,14 +28,14 @@ module.exports = {
     ],
     extensions: ['.js', '.vue', '.json'],
     alias: {
-      'vue$': 'vue/dist/vue.esm.js',
-      'src': resolve('src'),
-      'views': resolve('src/views'),
-      'components': resolve('src/components'),
-      'assets': resolve('src/assets'),
-      'api': resolve('src/api'),
-      'utils': resolve('src/utils')
-    }
+      vue$: 'vue/dist/vue.esm.js',
+      src: resolve('src'),
+      views: resolve('src/views'),
+      components: resolve('src/components'),
+      assets: resolve('src/assets'),
+      api: resolve('src/api'),
+      utils: resolve('src/utils'),
+    },
   },
   // https://doc.webpack-china.org/configuration/stats/
   // devServer: {
@@ -58,36 +58,36 @@ module.exports = {
         exclude: /node_modules/,
         options: {
           cache: true,
-          formatter: require('eslint-friendly-formatter')
-        }
+          formatter: require('eslint-friendly-formatter'),
+        },
       },
       {
         test: /\.vue$/,
         loader: 'vue-loader',
         exclude: /node_modules/,
-        options: vueLoaderConfig
+        options: vueLoaderConfig,
       },
       {
         test: /\.js$/,
         loader: 'babel-loader',
         exclude: /node_modules/,
-        include: [resolve('src'), resolve('test')]
+        include: [resolve('src'), resolve('test')],
       },
       {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
         loader: 'url-loader',
         query: {
           limit: 10000,
-          name: utils.assetsPath('img/[name].[hash:7].[ext]')
-        }
+          name: utils.assetsPath('img/[name].[hash:7].[ext]'),
+        },
       },
       {
         test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
         loader: 'url-loader',
         query: {
           limit: 10000,
-          name: utils.assetsPath('fonts/[name].[hash:7].[ext]')
-        }
+          name: utils.assetsPath('fonts/[name].[hash:7].[ext]'),
+        },
       },
       /**
        * ERROR  Failed to compile with 3 errors                                                             22:54:22
@@ -104,7 +104,7 @@ module.exports = {
       //   test: /\.css$/,
       //   loader: ExtractTextPlugin.extract(["css-loader", "postcss-loader"])
       // },
-    ]
+    ],
   },
   plugins: [
     new webpack.optimize.ModuleConcatenationPlugin(),
@@ -112,5 +112,5 @@ module.exports = {
     //   context: path.resolve(__dirname, '..'),
     //   manifest: require('./vendor-manifest.json')
     // }),
-  ]
-}
+  ],
+};
