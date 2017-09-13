@@ -29,9 +29,8 @@ module.exports = {
       'views': resolve('src/views'),
       'components': resolve('src/components'),
       'assets': resolve('src/assets'),
-      'api': resolve('src/api')
-      // 'x-mbase': resolve('src/x-mbase'),
-      // 'utils': resolve('src/x-mbase/utils')
+      'api': resolve('src/api'),
+      'utils': resolve('src/utils')
     }
   },
   module: {

@@ -41,6 +41,34 @@ class RootPaths {
     return path.join(this.rootPath, 'cdnAssets');
   }
 
+  getProjectDomain(projectName, platformUrl) {
+    const url = require('url')
+    const fs = require('fs')
+    const dotenv = require('dotenv')
+    const path = require('path')
+    const envPath = path.join(this.getProjectRoot(projectName), '.env')
+    let envConfig = dotenv.parse(fs.readFileSync(envPath))
+    if (envConfig['APP_ENV']) {
+      const AppEnvPath = path.join(this.getProjectRoot(projectName), `.${envConfig['APP_ENV']}.env`)
+      envConfig = Object.assign(envConfig, dotenv.parse(fs.readFileSync(AppEnvPath)))
+    }
+    const href = url.parse(envConfig[platformUrl])
+    // @todo 根据platform获取各个平台的domain
+
+    // const path = require('path')
+    // const envFile = path.join(__dirname, '.local.env')
+    // let envFileContent = fs.readFileSync(envFile, 'utf-8')
+    // const reg = /URL_OPS_ADMIN=http\:\/\/(.*?)[\s|\/]/ig;
+    // let domain = ''
+    // envFileContent.replace(reg, function (match, p1) {
+    //   console.log('p1', p1)
+    //   domain = p1
+    //   return p1
+    // })
+    console.log(' envConfig[platformUrl]', href.hostname)
+    return href.hostname
+  }
+
 }
 
 module.exports = RootPaths;
