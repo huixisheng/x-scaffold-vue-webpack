@@ -131,7 +131,7 @@ var webpackConfig = merge(baseWebpackConfig, {
       }
     ]),
     new WebpackAssetsManifest({
-      output: assetsManifestFile,
+      output: config.build.manifestPath,
       // publicPath: '//cdn.example.com'
       publicPath: function (val, manifest) {
         switch (manifest.getExtension(val).substr(1).toLowerCase()) {

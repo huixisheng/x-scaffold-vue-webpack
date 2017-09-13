@@ -22,6 +22,10 @@ module.exports = {
       : config.dev.assetsPublicPath
   },
   resolve: {
+    modules: [
+      resolve('src'),
+      resolve('node_modules'),
+    ],
     extensions: ['.js', '.vue', '.json'],
     alias: {
       'vue$': 'vue/dist/vue.esm.js',
@@ -33,25 +37,40 @@ module.exports = {
       'utils': resolve('src/utils')
     }
   },
+  // https://doc.webpack-china.org/configuration/stats/
+  // devServer: {
+  //   stats: {
+  //     colors: true,
+  //   },
+  // },
   module: {
+    // https://doc.webpack-china.org/configuration/module/#module-noparse
+    // noParse: function(content) {
+    //   // console.log(content);
+    //   return /vue\.esm\.js|axios|element-ui|lodash/.test(content);
+    // },
     rules: [
       {
         test: /\.(js|vue)$/,
         loader: 'eslint-loader',
         enforce: 'pre',
         include: [resolve('src'), resolve('test')],
+        exclude: /node_modules/,
         options: {
+          cache: true,
           formatter: require('eslint-friendly-formatter')
         }
       },
       {
         test: /\.vue$/,
         loader: 'vue-loader',
+        exclude: /node_modules/,
         options: vueLoaderConfig
       },
       {
         test: /\.js$/,
         loader: 'babel-loader',
+        exclude: /node_modules/,
         include: [resolve('src'), resolve('test')]
       },
       {

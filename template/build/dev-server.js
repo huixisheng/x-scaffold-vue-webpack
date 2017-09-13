@@ -92,7 +92,7 @@ app.use(devMiddleware)
 app.use(hotMiddleware)
 
 // serve pure static assets
-var staticPath = path.posix.join(config.dev.assetsPublicPath, config.dev.assetsSubDirectory)
+var staticPath = path.posix.join('/', config.dev.assetsSubDirectory)
 app.use(staticPath, express.static('./static'))
 
 var uri = 'http://' + utils.getIp() + ':' + port
@@ -100,6 +100,19 @@ var uri = 'http://' + utils.getIp() + ':' + port
 devMiddleware.waitUntilValid(function () {
   console.log('> Listening at ' + uri + '\n')
 })
+
+// @todo 报错
+// compiler.run((err, stats) => {
+//     process.stdout.write(stats.toString({
+//       colors: true,
+//       modules: true,
+//       children: true,
+//       chunks: true,
+//       timings: true,
+//       performance: true,
+//       // chunkModules: true,
+//     }) + '\n\n')
+// });
 
 module.exports = app.listen(port, function (err) {
   if (err) {

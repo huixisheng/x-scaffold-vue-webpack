@@ -1,5 +1,6 @@
 // see http://vuejs-templates.github.io/webpack for documentation.
 var path = require('path')
+var pkg = require('../package.json')
 // var getIp = require('../build/utils').getIp; // 出现死循环
 
 // https://www.npmjs.com/package/ip
@@ -20,10 +21,17 @@ function getIp(){
 
 const PORT = 8080;
 const cdnAssestPath = 's/webpack/';
-const adminManifestPath = 'Modules/Api/Assets/';
+const projectType = 'MHome';
+
+const RootPaths = require('../build/RootPaths');
+const rootPathsInstance = new RootPaths();
+
+const devManifestPath = path.join(rootPathsInstance.getModulesAssetsPath('cosmeapi', projectType), `test/webpack-${pkg.name}.json`);
+const buildManifestPath = path.join(rootPathsInstance.getModulesAssetsPath('cosmeapi', projectType), `webpack-${pkg.name}.json`);
 
 module.exports = {
   build: {
+    manifestPath: buildManifestPath,
     env: require('./prod.env'),
     index: path.resolve(__dirname, '../dist/index.html'),
     assetsRoot: path.resolve(__dirname, '../dist'),
@@ -44,6 +52,7 @@ module.exports = {
     bundleAnalyzerReport: process.env.npm_config_report
   },
   dev: {
+    manifestPath: devManifestPath,
     env: require('./dev.env'),
     port: PORT,
     index: path.resolve(__dirname, '../dist/index.html'),
@@ -52,11 +61,11 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: `//${getIp()}:${PORT}/`,
     proxyTable: {
-      '/cardapi': {
+      '/prepath': {
         target: 'http://xx.xx.com',
         changeOrigin: true,
         pathRewrite: {
-          '^/cardapi': '/cardapi'
+          '^/prepath': '/prepath'
         },
       },
     },
@@ -74,11 +83,10 @@ module.exports = {
         // 'vue/dist/vue.common.js',
         'vue/dist/vue.esm.js',
         'vue-router',
-        'mint-ui/lib/mint-ui.common.js',
+        'element-ui',
         'core-js',
         'axios',
         'vue-lazyload',
-        'v-tap',
         'qs',
       ],
     }

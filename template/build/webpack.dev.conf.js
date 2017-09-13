@@ -10,14 +10,8 @@ let HtmlWebpackPlugin = require('html-webpack-plugin')
 let FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 let StyleLintPlugin = require('stylelint-webpack-plugin')
 
-const RootPaths = require('./RootPaths');
-const rootPathsInstance = new RootPaths();
-var pkg = require('../package.json')
-// var xConfig = require('x-config-deploy').getConfig()
-// @todo
-var devMapPath = path.join(rootPathsInstance.getModulesAssetsPath('cosmeapi', 'Api'), `test/webpack-${pkg.name}.json`)
+
 var port = process.env.PORT || config.dev.port
-console.log(devMapPath);
 
 // add hot-reload related code to entry chunks
 Object.keys(baseWebpackConfig.entry).forEach(function (name) {
@@ -72,7 +66,7 @@ module.exports = merge(baseWebpackConfig, {
       chunks: ['vendor']
     }),
     new WebpackAssetsManifest({
-      output: devMapPath,
+      output: config.dev.manifestPath,
       writeToDisk: true,
       publicPath: function (val, manifest) {
         switch (manifest.getExtension(val).substr(1).toLowerCase()) {
