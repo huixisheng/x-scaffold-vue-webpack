@@ -12,7 +12,7 @@ require('shelljs/global');
 
 function init() {
   const assetsPath = path.join(config.build.assetsRoot, config.build.assetsSubDirectory);
-  const mapPath = path.join(config.build.assetsRoot, 'webpack-' + pkg.name + '.json');
+  // const mapPath = path.join(config.build.assetsRoot, 'webpack-' + pkg.name + '.json');
   // eslint-disable-next-line
   const cdnsWebpackDir = path.join(rootPathsInstance.getCdnAsstesRoot(),
     config.build.cdnAssestSubPath);
@@ -20,7 +20,7 @@ function init() {
   const h5MapPath = rootPathsInstance.getModulesAssetsPath('cosmeapi', 'Api');
   console.log(h5MapPath);
 
-  cp('-R', mapPath, h5MapPath);
+  // cp('-R', mapPath, h5MapPath);
   cp('-R', assetsPath, cdnsWebpackDir);
 
   cd(cdnsWebpackDir);
@@ -40,7 +40,7 @@ function init() {
   const time = `${date.getFullYear()}-${month}-${d}`;
   if (gitOutput.code === 0 && gitOutput.stdout.indexOf('use "git add') >= 0) {
     // eslint-disable-next-line
-    const shellCmd = util.format('git add . && git commit -am "[%s] [%s]更新前端资源文件" && git push origin master', time, pkg.name);
+    const shellCmd = util.format('git add . && git commit -am "[%s] [%s]更新前端资源文件" && git pull origin master && git push origin master', time, pkg.name);
     exec(shellCmd);
     cd(path.join(cdnsWebpackDir, '../../'));
     // console.log('\n\ncdnpath: %s\n\n', cdnpath)

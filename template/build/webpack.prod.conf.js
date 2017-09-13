@@ -111,9 +111,7 @@ const webpackConfig = merge(baseWebpackConfig, {
         return (
           module.resource &&
           /\.js$/.test(module.resource) &&
-          module.resource.indexOf(
-            path.join(__dirname, '../node_modules'),
-          ) === 0
+          module.resource.indexOf(path.join(__dirname, '../node_modules')) === 0
         );
       },
     }),
@@ -137,16 +135,16 @@ const webpackConfig = merge(baseWebpackConfig, {
       publicPath(val, manifest) {
         switch (manifest.getExtension(val).substr(1).toLowerCase()) {
           case 'jpg': case 'jpeg': case 'gif': case 'png': case 'svg':
-            return config.assetsPublicPath + val;
+            return config.build.assetsPublicPath + val;
             // break
           case 'css':
-            return config.assetsPublicPath + val;
+            return config.build.assetsPublicPath + val;
             // break
           case 'js':
-            return config.assetsPublicPath + val;
+            return config.build.assetsPublicPath + val;
             // break
           default:
-            return config.assetsPublicPath + val;
+            return config.build.assetsPublicPath + val;
         }
       },
     }),
@@ -172,15 +170,10 @@ if (config.build.productionGzip) {
     new CompressionWebpackPlugin({
       asset: '[path].gz[query]',
       algorithm: 'gzip',
-      test: new RegExp(
-        '\\.(' +
-        config.build.productionGzipExtensions.join('|') +
-        ')$',
-      ),
+      test: new RegExp('\\.(' + config.build.productionGzipExtensions.join('|') + ')$'),
       threshold: 10240,
       minRatio: 0.8,
-    }),
-  );
+    }));
 }
 
 module.exports = webpackConfig;

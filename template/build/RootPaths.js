@@ -6,11 +6,13 @@ const dotenv = require('dotenv');
 class RootPaths {
   constructor() {
     // @todo 支持更多扩展
+    // error  Expected 'this' to be used by class method 'getUserHome'  class-methods-use-this
     this.rootPath = path.join(this.getUserHome(), 'ProjectRoot');
   }
 
   // 用户的目录文件
-  static getUserHome() {
+  // eslint-disable-next-line
+  getUserHome() {
     let userHomeDir = process.env.HOME || process.env.USERPROFILE;
     if (!userHomeDir) {
       userHomeDir = process.env.HOMEDRIVE + process.env.HOMEPATH;
