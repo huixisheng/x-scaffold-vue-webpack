@@ -8,8 +8,8 @@ const webpack = require('webpack');
 function resolve(dir) {
   return path.join(__dirname, '..', dir);
 }
-const entry = utils.getEntries('./src/pages/*/*.js');
-entry['index'] = './src/main.js';
+const entry = utils.getEntriesJs();
+
 /* eslint-disable max-len */
 module.exports = {
   entry,
@@ -35,6 +35,9 @@ module.exports = {
       assets: resolve('src/assets'),
       api: resolve('src/api'),
       utils: resolve('src/utils'),
+      docs: resolve('docs'),
+      // @todo设置
+      theme: resolve('docs/theme/at-ui'),
     },
   },
   // https://doc.webpack-china.org/configuration/stats/
@@ -54,7 +57,7 @@ module.exports = {
         test: /\.(js|vue)$/,
         loader: 'eslint-loader',
         enforce: 'pre',
-        include: [resolve('src'), resolve('test')],
+        include: [resolve('src'), resolve('test'), resolve('docs')],
         exclude: /node_modules/,
         options: {
           cache: true,
@@ -64,14 +67,14 @@ module.exports = {
       {
         test: /\.vue$/,
         loader: 'vue-loader',
-        exclude: /node_modules/,
+        // exclude: /node_modules/,
         options: vueLoaderConfig,
       },
       {
         test: /\.js$/,
         loader: 'babel-loader',
-        exclude: /node_modules/,
-        include: [resolve('src'), resolve('test')],
+        // exclude: /node_modules/,
+        include: [resolve('src'), resolve('test'), resolve('docs')],
       },
       {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
@@ -110,7 +113,7 @@ module.exports = {
     new webpack.optimize.ModuleConcatenationPlugin(),
     // new webpack.DllReferencePlugin({
     //   context: path.resolve(__dirname, '..'),
-    //   manifest: require('./vendor-manifest.json')
+    //   manifest: require('./dll/vendor-manifest.json')
     // }),
   ],
 };

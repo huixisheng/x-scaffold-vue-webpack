@@ -1,18 +1,18 @@
 // see http://vuejs-templates.github.io/webpack for documentation.
-var path = require('path')
-var pkg = require('../package.json')
+const path = require('path');
+const pkg = require('../package.json');
 // var getIp = require('../build/utils').getIp; // 出现死循环
 
 // https://www.npmjs.com/package/ip
-function getIp(){
-  var os = require('os');
-  var interfaces = os.networkInterfaces();
-  var IPv4 = '127.0.0.1';
-  for (var key in interfaces) {
-    var alias = 0;
-    interfaces[key].forEach(function(details){
-      if (details.family == 'IPv4' && key == 'en0'  ) {
-          IPv4 = details.address;
+function getIp() {
+  const os = require('os');
+  const interfaces = os.networkInterfaces();
+  let IPv4 = '127.0.0.1';
+  for (const key in interfaces) {
+    // const alias = 0;
+    interfaces[key].forEach(function (details) {
+      if (details.family === 'IPv4' && key === 'en0') {
+        IPv4 = details.address;
       }
     });
   }
@@ -23,11 +23,12 @@ const PORT = 8080;
 const cdnAssestPath = 's/webpack/';
 const projectType = 'MHome';
 
-const RootPaths = require('../build/RootPaths');
+const RootPaths = require('../build/lib/RootPaths');
 const rootPathsInstance = new RootPaths();
+const projectAssetsPath = rootPathsInstance.getModulesAssetsPath('cosmeapi', projectType);
 
-const devManifestPath = path.join(rootPathsInstance.getModulesAssetsPath('cosmeapi', projectType), `test/webpack-${pkg.name}.json`);
-const buildManifestPath = path.join(rootPathsInstance.getModulesAssetsPath('cosmeapi', projectType), `webpack-${pkg.name}.json`);
+const devManifestPath = path.join(projectAssetsPath, `test/webpack-${pkg.name}.json`);
+const buildManifestPath = path.join(projectAssetsPath, `webpack-${pkg.name}.json`);
 
 module.exports = {
   build: {
@@ -49,7 +50,7 @@ module.exports = {
     // View the bundle analyzer report after build finishes:
     // `npm run build --report`
     // Set to `true` or `false` to always turn it on or off
-    bundleAnalyzerReport: process.env.npm_config_report
+    bundleAnalyzerReport: process.env.npm_config_report,
   },
   dev: {
     manifestPath: devManifestPath,
@@ -65,7 +66,7 @@ module.exports = {
         target: 'http://xx.xx.com',
         changeOrigin: true,
         pathRewrite: {
-          '^/prepath': '/prepath'
+          '^/prepath': '/prepath',
         },
       },
     },
@@ -74,7 +75,7 @@ module.exports = {
     // (https://github.com/webpack/css-loader#sourcemaps)
     // In our experience, they generally work as expected,
     // just be aware of this issue when enabling this option.
-    cssSourceMap: false
+    cssSourceMap: false,
   },
   // 配置dll
   dll: {
@@ -89,6 +90,6 @@ module.exports = {
         'vue-lazyload',
         'qs',
       ],
-    }
-  }
-}
+    },
+  },
+};

@@ -4,9 +4,10 @@
 
 <template>
   <div>
+    <h1>Hello 后台管理模板</h1>
     <div class="flex">
-      <div>icon1</div>
-      <div>icon2</div>
+      <div class="flex-item">flex-item</div>
+      <div class="flex-item">flex-item</div>
     </div>
   </div>
 </template>

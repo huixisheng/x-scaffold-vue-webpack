@@ -178,36 +178,10 @@ if (config.build.productionGzip) {
 
 module.exports = webpackConfig;
 
-// module.exports.plugins.push()
-const pages = utils.getEntries('./src/pages/*/*.html');
-
-// eslint-disable-next-line
-for (const pathname in pages) {
-  // 配置生成的html文件，定义路径等
-  const conf = {
-    filename: pathname + '.html',
-    template: pages[pathname],   // 模板路径
-    inject: true,              // js插入位置
-    minify: {
-      removeComments: true,
-      collapseWhitespace: true,
-      removeAttributeQuotes: true,
-        // more options:
-        // https://github.com/kangax/html-minifier#options-quick-reference
-    },
-    // necessary to consistently work with multiple chunks via CommonsChunkPlugin
-    chunksSortMode: 'dependency',
-  };
-  if (pathname in module.exports.entry) {    // 为页面导入所需的依赖
-    conf.chunks = ['vendor', 'manifest', pathname];
-    conf.hash = false;
-  }
-  module.exports.plugins.push(new HtmlWebpackPlugin(conf));
-  const debugConf = Object.assign({}, conf);
-  delete debugConf.minify;
-  debugConf.filename = pathname + '-debug.html';
-  module.exports.plugins.push(new HtmlWebpackPlugin(debugConf));
-}
+const pages = utils.getEntriesHtmlProd();
+pages.forEach((value) => {
+  module.exports.plugins.push(new HtmlWebpackPlugin(value));
+});
 
 if (config.build.bundleAnalyzerReport) {
   const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;

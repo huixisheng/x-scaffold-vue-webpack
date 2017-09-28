@@ -3,7 +3,13 @@ import Router from 'vue-router';
 
 const HomeIndex = () => import('views/home/index');
 
+// 以下子路由自己添加
+// import childrenHello from './children/hello';
+// import childrenHome from './children/home';
+
 Vue.use(Router);
+// 配置路由前缀
+const BASE_PARH = '/f';
 
 const routes = [
   {
@@ -30,5 +36,6 @@ if (process.env.NODE_ENV === 'development') {
 export default new Router({
   mode: 'history',
   routes,
+  base: BASE_PARH,
   linkActiveClass: 'router-active',
 });

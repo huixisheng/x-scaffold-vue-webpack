@@ -28,7 +28,7 @@ module.exports = {
     new webpack.optimize.ModuleConcatenationPlugin(),
     // new webpack.ContextReplacementPlugin(/moment[\/\\]locale$/, /zh-cn|en-gb/),
     new webpack.DllPlugin({
-      path: path.join(__dirname, '.', '[name]-manifest.json'),
+      path: path.join(__dirname, '.', 'dll/[name]-manifest.json'),
       libraryTarget: 'commonjs2',
       name: '[name]_library',
     }),

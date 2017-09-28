@@ -10,10 +10,12 @@ const opn = require('opn');
 const path = require('path');
 const express = require('express');
 const webpack = require('webpack');
+const DashboardPlugin = require('webpack-dashboard/plugin');
 const proxyMiddleware = require('http-proxy-middleware');
 const webpackConfig = process.env.NODE_ENV === 'testing'
   ? require('./webpack.prod.conf')
   : require('./webpack.dev.conf');
+// const webpackDocsConfig = require('./webpack.docs.conf')
 const utils = require('./utils');
 
 // default port where dev server listens for incoming traffic
@@ -50,10 +52,15 @@ app.use(function (req, res, next) {
   next();
 });
 
+// const compiler = webpack([webpackConfig, webpackDocsConfig]);
 const compiler = webpack(webpackConfig);
 
 const devMiddleware = require('webpack-dev-middleware')(compiler, {
   publicPath: webpackConfig.output.publicPath,
+  stats: {
+    colors: true,
+    chunks: false,
+  },
   quiet: true,
 });
 
@@ -90,6 +97,7 @@ app.use(devMiddleware);
 // enable hot-reload and state-preserving
 // compilation error display
 app.use(hotMiddleware);
+compiler.apply(new DashboardPlugin());
 
 // serve pure static assets
 const staticPath = path.posix.join('/', config.dev.assetsSubDirectory);

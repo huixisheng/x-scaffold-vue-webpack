@@ -89,12 +89,76 @@ exports.getEntries = function (globPath) {
   let pathname;
 
   glob.sync(globPath).forEach(function (entry) {
-    basename = path.basename(entry, path.extname(entry));
-    tmp = entry.split('/').splice(-3);
-    pathname = tmp.splice(1, 1) + '/' + basename;
+    // basename = path.basename(entry, path.extname(entry));
+    // tmp = entry.split('/').splice(-3);
+    // pathname = tmp.splice(1, 1) + '/' + basename;
+    pathname = entry.split('./src/pages/')[1];
+    if (path.dirname(pathname) !== 'index') {
+      pathname = path.dirname(pathname);
+    }
     entries[pathname] = entry;
   });
   return entries;
+};
+
+exports.getEntriesJs = function () {
+  const entry = exports.getEntries('./src/pages/**/*.js');
+  entry['index'] = './src/main.js';
+  return entry;
+};
+
+exports.getEntriesHtml = function () {
+  const pages = exports.getEntries('./src/pages/**/*.html');
+  pages['index'] = './index.html';
+  const htmlWebpackPluginConf = [];
+  // eslint-disable-next-line
+  for (const pathname in pages) {
+    const chunk = pathname;
+    const conf = {
+      filename: pathname + '.html',
+      template: pages[pathname],
+      inject: true,
+      hash: process.env.NODE_ENV === 'production',
+      chunks: ['vendor', 'manifest', chunk],
+      // excludeChunks: Object.keys(pages).filter(item => (item !== pathname)),
+    };
+    htmlWebpackPluginConf.push(conf);
+  }
+  // @todo 写入页面地址
+  return htmlWebpackPluginConf;
+};
+
+exports.getEntriesHtmlProd = function () {
+  const pages = exports.getEntries('./src/pages/**/*.html');
+  pages['index'] = './index.html';
+  const htmlWebpackPluginConf = [];
+  // eslint-disable-next-line
+  for (const pathname in pages) {
+    // 配置生成的html文件，定义路径等
+    const conf = {
+      filename: pathname + '.html',
+      template: pages[pathname],   // 模板路径
+      inject: true,              // js插入位置
+      minify: {
+        removeComments: true,
+        collapseWhitespace: true,
+        removeAttributeQuotes: true,
+        // more options:
+        // https://github.com/kangax/html-minifier#options-quick-reference
+      },
+      // necessary to consistently work with multiple chunks via CommonsChunkPlugin
+      chunksSortMode: 'dependency',
+    };
+    if (pathname in module.exports.entry) {    // 为页面导入所需的依赖
+      conf.chunks = ['vendor', 'manifest', pathname];
+      conf.hash = true;
+    }
+    htmlWebpackPluginConf.push(conf);
+    const debugConf = Object.assign({}, conf);
+    delete debugConf.minify;
+    debugConf.filename = pathname + '-debug.html';
+    htmlWebpackPluginConf.push(debugConf);
+  }
 };
 
 // https://www.npmjs.com/package/ip
@@ -114,3 +178,18 @@ exports.getIp = function () {
   }
   return IPv4;
 };
+
+/**
+ * 增加 hljs 的 classname
+ */
+exports.wrapCustomClass = render => function (...args) {
+  return render(...args)
+      .replace('<code class="', '<code class="hljs ')
+      .replace('<code>', '<code class="hljs">');
+};
+
+/**
+ * Format HTML string
+ */
+exports.convertHtml = str => str.replace(/(&#x)(\w{4});/gi, $0 => String.fromCharCode(parseInt(encodeURIComponent($0).replace(/(%26%23x)(\w{4})(%3B)/g, '$2'), 16)));
+

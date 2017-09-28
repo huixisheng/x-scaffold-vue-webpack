@@ -1,8 +1,8 @@
 /* global cp, cd, exec */
 const path = require('path');
 const util = require('util');
-const pkg = require('../package.json');
-const config = require('../config');
+const pkg = require('../../package.json');
+const config = require('../../config');
 // const xConfig = require('x-config-deploy').getConfig();
 const RootPaths = require('./RootPaths');
 
