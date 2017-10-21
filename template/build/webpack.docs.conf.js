@@ -9,6 +9,7 @@ const striptags = require('./lib/strip-tags');
 const baseWebpackConfig = require('./webpack.base.conf');
 const config = require('../config');
 const utils = require('./utils');
+const webpackConfig = require('@x-scaffold/webpack-config');
 
 const vueMarkdown = {
   preventExtract: true,
@@ -16,7 +17,7 @@ const vueMarkdown = {
     MarkdownIt.renderer.rules.table_open = function () {
       return '<table class="table">';
     };
-    MarkdownIt.renderer.rules.fence = utils.wrapCustomClass(MarkdownIt.renderer.rules.fence);
+    MarkdownIt.renderer.rules.fence = webpackConfig.wrapCustomClass(MarkdownIt.renderer.rules.fence);
     return source;
   },
   use: [
@@ -24,7 +25,7 @@ const vueMarkdown = {
       validate: params => params.trim().match(/^demo\s*(.*)$/),
       render: (tokens, idx) => {
         if (tokens[idx].nesting === 1) {
-          const html = utils.convertHtml(striptags(tokens[idx + 1].content, 'script'));
+          const html = webpackConfig.convertHtml(striptags(tokens[idx + 1].content, 'script'));
 
           return `<demo-box>
                     <div slot="demo">${html}</div>
@@ -60,7 +61,7 @@ module.exports = merge(baseWebpackConfig, {
     compress: true,
     openPage: 'docs/index.html',
     port: PORT,
-    host: utils.getIp(),
+    host: webpackConfig.getIp(),
     watchOptions: {
       poll: true,
     },
@@ -88,7 +89,7 @@ module.exports = merge(baseWebpackConfig, {
         test: /\.html$/,
         loader: 'vue-html-loader',
       },
-    ].concat(utils.styleLoaders({
+    ].concat(webpackConfig.styleLoaders({
       sourceMap: config.dev.cssSourceMap,
       extract: true,
     })),
@@ -109,20 +110,3 @@ module.exports = merge(baseWebpackConfig, {
     }),
   ],
 });
-
-
-// const pages = utils.getEntries('./src/pages/*/*.html');
-// pages['docs'] = './docs/index.html';
-// // eslint-disable-next-line
-// for (const pathname in pages) {
-//   const excludeChunks = Object.keys(pages).filter(item => (item !== pathname));
-//   console.log(excludeChunks);
-//   console.log(pathname);
-//   const conf = {
-//     filename: pathname + '.html',
-//     template: pages[pathname],
-//     inject: true,
-//     excludeChunks,
-//   };
-//   module.exports.plugins.push(new HtmlWebpackPlugin(conf));
-// }

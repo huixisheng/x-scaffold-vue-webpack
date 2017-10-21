@@ -10,7 +10,7 @@ const opn = require('opn');
 const path = require('path');
 const express = require('express');
 const webpack = require('webpack');
-const DashboardPlugin = require('webpack-dashboard/plugin');
+// const DashboardPlugin = require('webpack-dashboard/plugin');
 const proxyMiddleware = require('http-proxy-middleware');
 const webpackConfig = process.env.NODE_ENV === 'testing'
   ? require('./webpack.prod.conf')
@@ -97,7 +97,7 @@ app.use(devMiddleware);
 // enable hot-reload and state-preserving
 // compilation error display
 app.use(hotMiddleware);
-compiler.apply(new DashboardPlugin());
+// compiler.apply(new DashboardPlugin());
 
 // serve pure static assets
 const staticPath = path.posix.join('/', config.dev.assetsSubDirectory);
@@ -105,31 +105,67 @@ app.use(staticPath, express.static('./static'));
 
 const uri = 'http://' + utils.getIp() + ':' + port;
 
-devMiddleware.waitUntilValid(function () {
-  console.log('> Listening at ' + uri + '\n');
-});
+var _resolve
+var _reject
+var readyPromise = new Promise((resolve, reject) => {
+  _resolve = resolve
+  _reject = reject
+})
 
-// @todo 报错
-// compiler.run((err, stats) => {
-//     process.stdout.write(stats.toString({
-//       colors: true,
-//       modules: true,
-//       children: true,
-//       chunks: true,
-//       timings: true,
-//       performance: true,
-//       // chunkModules: true,
-//     }) + '\n\n')
+var server
+var portfinder = require('portfinder')
+portfinder.basePort = port
+
+console.log('> Starting dev server...')
+devMiddleware.waitUntilValid(() => {
+  portfinder.getPort((err, port) => {
+    if (err) {
+      _reject(err)
+    }
+    process.env.PORT = port
+    var uri = 'http://localhost:' + port
+    console.log('> Listening at ' + uri + '\n')
+    // when env is testing, don't need open it
+    if (autoOpenBrowser && process.env.NODE_ENV !== 'testing') {
+      opn(uri)
+    }
+    server = app.listen(port)
+    _resolve()
+  })
+})
+
+module.exports = {
+  ready: readyPromise,
+  close: () => {
+    server.close()
+  }
+}
+
+// devMiddleware.waitUntilValid(function () {
+//   console.log('> Listening at ' + uri + '\n');
 // });
 
-module.exports = app.listen(port, function (err) {
-  if (err) {
-    console.log(err);
-    return;
-  }
+// // @todo 报错
+// // compiler.run((err, stats) => {
+// //     process.stdout.write(stats.toString({
+// //       colors: true,
+// //       modules: true,
+// //       children: true,
+// //       chunks: true,
+// //       timings: true,
+// //       performance: true,
+// //       // chunkModules: true,
+// //     }) + '\n\n')
+// // });
 
-  // when env is testing, don't need open it
-  if (autoOpenBrowser && process.env.NODE_ENV !== 'testing') {
-    opn(uri);
-  }
-});
+// module.exports = app.listen(port, function (err) {
+//   if (err) {
+//     console.log(err);
+//     return;
+//   }
+
+//   // when env is testing, don't need open it
+//   if (autoOpenBrowser && process.env.NODE_ENV !== 'testing') {
+//     opn(uri);
+//   }
+// });

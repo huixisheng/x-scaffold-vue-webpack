@@ -1,4 +1,5 @@
 const utils = require('./utils');
+const webpackConfig = require('@x-scaffold/webpack-config');
 const webpack = require('webpack');
 const config = require('../config');
 const merge = require('webpack-merge');
@@ -8,8 +9,9 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const baseWebpackConfig = require('./webpack.base.conf');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin');
-// const StyleLintPlugin = require('stylelint-webpack-plugin');
+const StyleLintPlugin = require('stylelint-webpack-plugin');
 
+const IP = webpackConfig.getIp();
 
 const port = process.env.PORT || config.dev.port;
 
@@ -20,7 +22,7 @@ Object.keys(baseWebpackConfig.entry).forEach(function (name) {
 
 module.exports = merge(baseWebpackConfig, {
   module: {
-    rules: utils.styleLoaders({
+    rules: webpackConfig.styleLoaders({
       sourceMap: config.dev.cssSourceMap,
       extract: true,
     }),
@@ -34,10 +36,11 @@ module.exports = merge(baseWebpackConfig, {
   devtool: '#cheap-module-eval-source-map',
   plugins: [
     // @todo 报错
-    // new StyleLintPlugin({
-    //   failOnError: false,
-    //   files: '../static/.css'
-    // }),
+    new StyleLintPlugin({
+      failOnError: false,
+      files: ['**/*.s?(a|c)ss', 'src/**/**/*.vue', 'src/***/*.css'],
+      // files: '../static/.css'
+    }),
     new webpack.DefinePlugin({
       'process.env': config.dev.env,
     }),
@@ -70,16 +73,16 @@ module.exports = merge(baseWebpackConfig, {
       publicPath(val, manifest) {
         switch (manifest.getExtension(val).substr(1).toLowerCase()) {
           case 'jpg': case 'jpeg': case 'gif': case 'png': case 'svg':
-            return '//' + utils.getIp() + ':' + port + '/' + val;
+            return '//' + IP + ':' + port + '/' + val;
             // break
           case 'css':
-            return '//' + utils.getIp() + ':' + port + '/' + val;
+            return '//' + IP + ':' + port + '/' + val;
             // break
           case 'js':
-            return '//' + utils.getIp() + ':' + port + '/' + val;
+            return '//' + IP + ':' + port + '/' + val;
             // break
           default:
-            return '//' + utils.getIp() + ':' + port + '/' + val;
+            return '//' + IP + ':' + port + '/' + val;
         }
       },
       // eslint-disable-next-line
@@ -102,7 +105,7 @@ module.exports = merge(baseWebpackConfig, {
   ],
 });
 
-const pages = utils.getEntriesHtml();
+const pages = webpackConfig.getEntriesHtml();
 pages.forEach((value) => {
   module.exports.plugins.push(new HtmlWebpackPlugin(value));
 });

@@ -1,14 +1,13 @@
 const path = require('path');
 const utils = require('./utils');
 const config = require('../config');
-const vueLoaderConfig = require('./vue-loader.conf');
-// const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const webpackConfig = require('@x-scaffold/webpack-config');
 const webpack = require('webpack');
 
 function resolve(dir) {
   return path.join(__dirname, '..', dir);
 }
-const entry = utils.getEntriesJs();
+const entry = webpackConfig.getEntriesJs();
 
 /* eslint-disable max-len */
 module.exports = {
@@ -67,8 +66,10 @@ module.exports = {
       {
         test: /\.vue$/,
         loader: 'vue-loader',
-        // exclude: /node_modules/,
-        options: vueLoaderConfig,
+        options: {
+          loaders: webpackConfig.loaders,
+          // other vue-loader options go here
+        },
       },
       {
         test: /\.js$/,

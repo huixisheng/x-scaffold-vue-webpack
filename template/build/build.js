@@ -10,7 +10,7 @@ const webpack = require('webpack');
 const config = require('../config');
 const webpackConfig = require('./webpack.prod.conf');
 // var webpackConfigDebug = require('./webpack.prod.debug.conf')
-const buildCdn = require('./lib/build-cdn');
+// const buildCdn = require('./lib/build-cdn');
 
 const spinner = ora('building for production...');
 spinner.start();
@@ -35,6 +35,6 @@ rm(path.join(config.build.assetsRoot, config.build.assetsSubDirectory), (error) 
       '  Tip: built files are meant to be served over an HTTP server.\n' +
       '  Opening index.html over file:// won\'t work.\n'));
     spinner.stop();
-    buildCdn.init();
+    // buildCdn.init();
   });
 });
