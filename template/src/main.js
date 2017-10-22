@@ -28,10 +28,10 @@ router.afterEach((route) => {
   // const originLocation = location.origin;
   // const mobile = user.mobile;
   // const shareData = {
-  //   title: '点此购买美星家会员，助力好友拿会员！',
-  //   link: `${originLocation}/card/member?invite_code=${mobile}`,
-  //   desc: '超多特权，超多折扣！就在美星家～',
-  //   imgUrl: 'http://img0.cosmeapp.com/Ftx_gD2P01-pN_5QBvOpVkSG5bpC',
+  //   title: '',
+  //   link: ``,
+  //   desc: '',
+  //   imgUrl: '',
   // };
   // // console.log(shareData);
   // F.emit('share', shareData, function () {});

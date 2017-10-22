@@ -22,12 +22,12 @@ rm(path.join(config.build.assetsRoot, config.build.assetsSubDirectory), (error) 
 
     process.stdout.write(stats.toString({
       colors: true,
-      modules: true,
+      modules: false,
       children: true,
-      chunks: true,
+      chunks: false,
       timings: true,
       performance: true,
-      chunkModules: true,
+      chunkModules: false,
     }) + '\n\n');
 
     console.log(chalk.cyan('  Build complete.\n'));

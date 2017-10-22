@@ -29,7 +29,7 @@ if (process.env.NODE_ENV === 'development') {
     path: '/demo',
     name: 'Hello',
     // eslint-disable-next-line
-    component: require('views/hello/hello'),
+    component: require('views/hello/Hello').default,
   });
 }
 

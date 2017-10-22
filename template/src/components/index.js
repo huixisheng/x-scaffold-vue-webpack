@@ -6,7 +6,6 @@ const install = function (Vue) {
   // packages.map(component => {
   //   Vue.component(component.name, component);
   // });
-  console.log(Object.keys(packages));
   Object.keys(packages).forEach((key) => {
     Vue.component(packages[key].name, packages[key]);
   });

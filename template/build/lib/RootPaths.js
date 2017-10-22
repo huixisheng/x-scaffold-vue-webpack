@@ -4,10 +4,15 @@ const url = require('url');
 const dotenv = require('dotenv');
 
 class RootPaths {
-  constructor() {
+  // @todo
+  constructor(projectRoot) {
     // @todo 支持更多扩展
     // error  Expected 'this' to be used by class method 'getUserHome'  class-methods-use-this
-    this.rootPath = path.join(this.getUserHome(), 'ProjectRoot');
+    if (projectRoot) {
+      this.rootPath = projectRoot;
+    } else {
+      this.rootPath = path.join(this.getUserHome(), 'ProjectRoot');
+    }
   }
 
   // 用户的目录文件

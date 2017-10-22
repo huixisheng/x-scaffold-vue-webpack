@@ -1,28 +1,42 @@
 <template>
-  <div class="demo">
-    <div class="demo-item">
-      <h2>页面入口</h2>
-      <template v-for="item in links">
-        <div class="btn" type="primary" size="large" style="margin-bottom: 10px;" >
-          <router-link v-if="item.router" :to="item.link">{{item.name}}</router-link>
-          <a v-else :href="item.link">{{item.name}}</a>
-        </div>
-      </template>
+  <div class="container">
+    <div class="less-flex demo">
+      <div class="less-flex-item demo-item">{{ msg }}</div>
+      <div class="less-flex-item demo-item">{{ msg }}</div>
     </div>
 
-    <div class="demo-item">
-      <h2>文档</h2>
-      <template v-for="item in docsLinks">
-        <div class="btn" type="primary" size="large" style="margin-bottom: 10px;" >
-          <router-link v-if="item.router" :to="item.link">{{item.name}}</router-link>
-          <a target="_blank" v-else :href="item.link">{{item.name}}</a>
-        </div>
-      </template>
+    <div class="demo">
+      <div class="img-wrap">
+        <img src="~src/assets/logo.jpeg">
+      </div>
     </div>
 
-    <div class="demo-item">
-      <h2>组件-xx-demo</h2>
-      <section></section>
+    <div class="demo">
+      <div class="img-css"></div>
+    </div>
+
+    <div class="demoshow">
+      <div class="">
+        <h2>页面入口</h2>
+        <template v-for="item in links">
+          <div class="btn" type="primary" size="large" style="margin-bottom: 10px;" >
+            <router-link v-if="item.router" :to="item.link">{{item.name}}</router-link>
+            <a v-else :href="item.link">{{item.name}}</a>
+          </div>
+        </template>
+      </div>
+    </div>
+
+    <div class="demoshow">
+      <div class="">
+        <h2>文档</h2>
+        <template v-for="item in docsLinks">
+          <div class="btn" type="primary" size="large" style="margin-bottom: 10px;" >
+            <router-link v-if="item.router" :to="item.link">{{item.name}}</router-link>
+            <a target="_blank" v-else :href="item.link">{{item.name}}</a>
+          </div>
+        </template>
+      </div>
     </div>
 
   </div>
@@ -33,6 +47,7 @@ export default {
   name: 'hello',
   data() {
     return {
+      msg: 'hello x-scaffold-vue-webpack',
       links: [
         {
           link: '/',
@@ -90,10 +105,27 @@ export default {
 };
 </script>
 
+<style>
+.container { max-width: 540px; margin: 0 auto; }
+.demo { margin-bottom: 20px; text-align: center; }
+.demo-item { border: 1px solid #ddd; padding: 20px 0; margin: 0 10px; }
+.img-wrap { display: block; }
+.img-wrap > img { max-width: 100%; display: block; }
+.img-css { width: 75px; height: 76px; background: url(~src/assets/logo.jpeg) no-repeat center center; background-size: cover; }
+img { display: block; }
+</style>
+<style lang="less">
+.less-flex {
+  display: flex;
+  &-item {
+    flex: 1;
+  }
+}
+</style>
+
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.demo { max-width: 540px; margin: 0 auto; }
-.demo-item{ margin-bottom: 20px; }
+.demoshow { margin-bottom: 20px; }
 h2 { color: #333; }
 .btn { padding: 8px 0; border: 1px solid #FF4A83; color: #FF4A83; margin-bottom: 10px; text-align: center; border-radius: 4px; }
 .btn > a { color: #FF4A83; display: block; }

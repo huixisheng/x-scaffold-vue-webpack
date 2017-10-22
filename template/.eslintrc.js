@@ -25,6 +25,11 @@ module.exports = {
     },
   },
   rules: {
+    // allow debugger during development
+    'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
+    // This rule warns the usage of `console`
+    // 不禁用 console
+    'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     // 'no-unused-vars': 'off',
     'global-require': 'off',
     // https://eslint.cn/docs/rules/guard-for-in

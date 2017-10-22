@@ -23,8 +23,14 @@ const PORT = 8080;
 const cdnAssestPath = 's/webpack/';
 const projectType = 'MHome';
 
+let projectRoot = '';
+const dirname = __dirname;
+if (dirname.indexOf('cosmeapi/assets') >= 0 ) {
+  projectRoot = path.resolve(dirname, '../../../../');
+}
+
 const RootPaths = require('../build/lib/RootPaths');
-const rootPathsInstance = new RootPaths();
+const rootPathsInstance = new RootPaths(projectRoot);
 const projectAssetsPath = rootPathsInstance.getModulesAssetsPath('cosmeapi', projectType);
 
 const devManifestPath = path.join(projectAssetsPath, `test/webpack-${pkg.name}.json`);
@@ -36,9 +42,9 @@ module.exports = {
     env: require('./prod.env'),
     index: path.resolve(__dirname, '../dist/index.html'),
     assetsRoot: path.resolve(__dirname, '../dist'),
-    assetsSubDirectory: 'static',
+    assetsSubDirectory: pkg.name,
     cdnAssestSubPath: cdnAssestPath,
-    assetsPublicPath: `//p.cosmeapp.com/${cdnAssestPath}`,
+    assetsPublicPath: `http://p1.cosmeapp.com/`,
     productionSourceMap: false,
     // Gzip off by default as many popular static hosts such as
     // Surge or Netlify already gzip all static assets for you.
@@ -59,7 +65,7 @@ module.exports = {
     index: path.resolve(__dirname, '../dist/index.html'),
     autoOpenBrowser: true,
     assetsRoot: path.resolve(__dirname, '../dist'),
-    assetsSubDirectory: 'static',
+    assetsSubDirectory: pkg.name,
     assetsPublicPath: `//${getIp()}:${PORT}/`,
     proxyTable: {
       '/prepath': {

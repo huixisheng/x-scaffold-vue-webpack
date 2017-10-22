@@ -12,7 +12,7 @@ const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin');
 const WebpackAssetsManifest = require('webpack-assets-manifest');
 const webpackConfig = require('@x-scaffold/webpack-config');
 const QiniuPlugin = require('qiniu-webpack-plugin');
-// const pkg = require('../package.json');
+const pkg = require('../package.json');
 // const DashboardPlugin = require('webpack-dashboard/plugin');
 // const WebpackSftpClient = require('webpack-sftp-client');
 // const xConfig = require('x-config-deploy').getConfig();
@@ -25,6 +25,7 @@ const qiniuPluginAssets = new QiniuPlugin({
   SECRET_KEY: xConfig.qiniuConfig.secretKey,
   bucket: 'deploy',
   path: '',
+  include: [new RegExp(pkg.name + '/')],
   // include 可选项。你可以选择上传的文件，比如['main.js']``或者[/main/]`
   // path: '[hash]'
 });
@@ -52,9 +53,10 @@ const webpackBaseConfig = merge(baseWebpackConfig, {
   },
   plugins: [
     qiniuPluginAssets,
-    new StatsWriterPlugin({
-      filename: 'stats.json', // Default
-    }),
+    // @todo
+    // new StatsWriterPlugin({
+    //   filename: 'stats.json', // Default
+    // }),
     // http://vuejs.github.io/vue-loader/en/workflow/production.html
     new webpack.DefinePlugin({
       'process.env': env,
@@ -91,7 +93,7 @@ const webpackBaseConfig = merge(baseWebpackConfig, {
     // }),
     // extract css into its own file
     new ExtractTextPlugin({
-      filename: utils.assetsPath('css/[name].[contenthash].css'),
+      filename: utils.assetsPath('css/[name].[contenthash:8].css'),
     }),
     // Compress extracted CSS. We are using this plugin so that possible
     // duplicated CSS from different components can be deduped.
@@ -192,10 +194,9 @@ if (config.build.productionGzip) {
 module.exports = webpackBaseConfig;
 
 const pages = webpackConfig.getEntriesHtmlProd();
-console.log(pages);
-for(page in pages) {
-  module.exports.plugins.push(new HtmlWebpackPlugin(pages[page]));
-}
+pages.forEach((value) => {
+  module.exports.plugins.push(new HtmlWebpackPlugin(value));
+});
 
 if (config.build.bundleAnalyzerReport) {
   const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
