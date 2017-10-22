@@ -5,7 +5,6 @@ module.exports = {
   //   sourceType: 'module'
   // },
   extends: 'style-guide',
-  // extends: 'airbnb-base',
   // required to lint *.vue files
   plugins: [
 

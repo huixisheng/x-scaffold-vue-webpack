@@ -1,16 +1,10 @@
 import Vue from 'vue';
 import MintUI from 'mint-ui';
-// import VueLazyload from 'vue-lazyload';
 import vueTap from 'v-tap';
 import 'normalize.css/normalize.css';
 import 'mint-ui/lib/style.css';
 import Packages from 'components/index';
 // import filters from 'x-mbase/filters';
-
-// 使用easy-mock 代替
-// if (process.env.NODE_ENV === 'development') {
-//   require('./mock/index'); // eslint-disable-line
-// }
 
 Vue.use(vueTap);
 Vue.use(Packages);
