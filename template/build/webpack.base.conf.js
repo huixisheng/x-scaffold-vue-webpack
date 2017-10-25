@@ -59,7 +59,7 @@ module.exports = {
         include: [resolve('src'), resolve('test'), resolve('docs')],
         exclude: /node_modules/,
         options: {
-          cache: true,
+          cache: false,
           formatter: require('eslint-friendly-formatter'),
         },
       },

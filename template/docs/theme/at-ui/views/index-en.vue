@@ -3,9 +3,8 @@
     <m-header :collapse="false"></m-header>
     <section class="section section-banner">
       <div class="container">
-
+        <h1>main content</h1>
       </div>
-
     </section>
     <section class="section section-navigation">
 
