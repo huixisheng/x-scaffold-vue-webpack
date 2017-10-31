@@ -96,19 +96,15 @@ const webpackConfig = merge(baseWebpackConfig, {
 if (config.build.productionGzip) {
   const CompressionWebpackPlugin = require('compression-webpack-plugin');
 
-  webpackConfig.plugins.push(
-    new CompressionWebpackPlugin({
-      asset: '[path].gz[query]',
-      algorithm: 'gzip',
-      test: new RegExp(
-        '\\.(' +
+  webpackConfig.plugins.push(new CompressionWebpackPlugin({
+    asset: '[path].gz[query]',
+    algorithm: 'gzip',
+    test: new RegExp('\\.(' +
         config.build.productionGzipExtensions.join('|') +
-        ')$',
-      ),
-      threshold: 10240,
-      minRatio: 0.8,
-    }),
-  );
+        ')$'),
+    threshold: 10240,
+    minRatio: 0.8,
+  }));
 }
 
 if (config.build.bundleAnalyzerReport) {
@@ -125,8 +121,8 @@ for (const pathname in pages) {
   // 配置生成的html文件，定义路径等
   const conf = {
     filename: pathname + '-debug.html',
-    template: pages[pathname],   // 模板路径
-    inject: true,              // js插入位置
+    template: pages[pathname], // 模板路径
+    inject: true, // js插入位置
     // minify: {
     //     removeComments: true,
     //     collapseWhitespace: true,
@@ -137,7 +133,7 @@ for (const pathname in pages) {
     // // necessary to consistently work with multiple chunks via CommonsChunkPlugin
     chunksSortMode: 'dependency',
   };
-  if (pathname in module.exports.entry) {    // 为页面导入所需的依赖
+  if (pathname in module.exports.entry) { // 为页面导入所需的依赖
     conf.chunks = ['vendor', 'manifest', pathname];
     conf.hash = false;
   }

@@ -27,9 +27,10 @@ Vue.use(MintUI, {
 });
 function formatImageToWebp(src) {
   // http://static.cosmeapp.com/activity/201703/28/10/50/58d9cf6d0d6a6679.jpg?imageMogr2/auto-orient/thumbnail/750x%3E  @todo
-  if (src.indexOf('?imageView2') >= 0 || src.indexOf('?imageMogr2') >= 0) {
+  // https://static.cosmeapp.com/avatar/021/49/64/48_avatar_big.jpg?_1440750428.jpg&imageView2/1/w/300/h/300
+  if (src.indexOf('imageView2') >= 0 || src.indexOf('imageMogr2') >= 0) {
     if (src.indexOf('format/') >= 0) {
-      return src.replace(/\/format\/jpg/ig, '/format/webp');
+      return src.replace(/\/format\/(jpg|jpeg|png)/ig, '/format/webp');
     }
     return src + '/format/webp';
   }

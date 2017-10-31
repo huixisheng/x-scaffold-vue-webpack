@@ -72,7 +72,6 @@ class RootPaths {
     console.log(' envConfig[platformUrl]', href.hostname);
     return href.hostname;
   }
-
 }
 
 module.exports = RootPaths;

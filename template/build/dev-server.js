@@ -19,7 +19,7 @@ const webpackConfig = process.env.NODE_ENV === 'testing'
 const utils = require('./utils');
 
 // default port where dev server listens for incoming traffic
-const port = process.env.PORT || config.dev.port;
+const PORT = process.env.PORT || config.dev.port;
 // automatically open browser, if not set will be false
 const autoOpenBrowser = !!config.dev.autoOpenBrowser;
 // Define HTTP proxies to your custom API backend
@@ -35,20 +35,20 @@ const app = express();
 // https://stackoverflow.com/questions/37465815/node-js-no-access-control-allow-origin-header-is-present-on-the-requested
 // Add headers
 app.use(function (req, res, next) {
-    // Website you wish to allow to connect
+  // Website you wish to allow to connect
   res.setHeader('Access-Control-Allow-Origin', '*');
 
-    // Request methods you wish to allow
+  // Request methods you wish to allow
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
 
-    // Request headers you wish to allow
+  // Request headers you wish to allow
   res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
 
-    // Set to true if you need the website to include cookies in the requests sent
-    // to the API (e.g. in case you use sessions)
+  // Set to true if you need the website to include cookies in the requests sent
+  // to the API (e.g. in case you use sessions)
   res.setHeader('Access-Control-Allow-Credentials', true);
 
-    // Pass to next layer of middleware
+  // Pass to next layer of middleware
   next();
 });
 
@@ -103,43 +103,44 @@ app.use(hotMiddleware);
 const staticPath = path.posix.join('/', config.dev.assetsSubDirectory);
 app.use(staticPath, express.static('./static'));
 
-const uri = 'http://' + utils.getIp() + ':' + port;
+let uri = 'http://' + utils.getIp() + ':' + PORT;
 
-var _resolve
-var _reject
-var readyPromise = new Promise((resolve, reject) => {
-  _resolve = resolve
-  _reject = reject
-})
+let _resolve;
+let _reject;
+const readyPromise = new Promise((resolve, reject) => {
+  _resolve = resolve;
+  _reject = reject;
+});
 
-var server
-var portfinder = require('portfinder')
-portfinder.basePort = port
+let server;
+const portfinder = require('portfinder');
 
-console.log('> Starting dev server...')
+portfinder.basePort = PORT;
+
+console.log('> Starting dev server...');
 devMiddleware.waitUntilValid(() => {
   portfinder.getPort((err, port) => {
     if (err) {
-      _reject(err)
+      _reject(err);
     }
-    process.env.PORT = port
-    var uri = 'http://localhost:' + port
-    console.log('> Listening at ' + uri + '\n')
+    process.env.PORT = port;
+    uri = 'http://localhost:' + port;
+    console.log('> Listening at ' + uri + '\n');
     // when env is testing, don't need open it
     if (autoOpenBrowser && process.env.NODE_ENV !== 'testing') {
-      opn(uri)
+      opn(uri);
     }
-    server = app.listen(port)
-    _resolve()
-  })
-})
+    server = app.listen(port);
+    _resolve();
+  });
+});
 
 module.exports = {
   ready: readyPromise,
   close: () => {
-    server.close()
-  }
-}
+    server.close();
+  },
+};
 
 // devMiddleware.waitUntilValid(function () {
 //   console.log('> Listening at ' + uri + '\n');

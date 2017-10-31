@@ -31,6 +31,7 @@ module.exports = {
     'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     // 'no-unused-vars': 'off',
     'global-require': 'off',
+    'prefer-destructuring': 'off',
     // https://eslint.cn/docs/rules/guard-for-in
     'guard-for-in': 'off',
     // specify the maximum length of a line in your program

@@ -17,7 +17,8 @@ const vueMarkdown = {
     MarkdownIt.renderer.rules.table_open = function () {
       return '<table class="table">';
     };
-    MarkdownIt.renderer.rules.fence = webpackConfig.wrapCustomClass(MarkdownIt.renderer.rules.fence);
+    MarkdownIt.renderer.rules.fence = webpackConfig
+      .wrapCustomClass(MarkdownIt.renderer.rules.fence);
     return source;
   },
   use: [

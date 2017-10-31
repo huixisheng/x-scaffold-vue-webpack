@@ -18,7 +18,7 @@ const pkg = require('../package.json');
 // const xConfig = require('x-config-deploy').getConfig();
 
 // const ParallelUglifyPlugin = require('webpack-parallel-uglify-plugin');
-const StatsWriterPlugin = require('webpack-stats-plugin').StatsWriterPlugin;
+// const StatsWriterPlugin = require('webpack-stats-plugin').StatsWriterPlugin;
 
 const qiniuPluginAssets = new QiniuPlugin({
   ACCESS_KEY: xConfig.qiniuConfig.accessKey,
@@ -181,14 +181,13 @@ const webpackBaseConfig = merge(baseWebpackConfig, {
 if (config.build.productionGzip) {
   const CompressionWebpackPlugin = require('compression-webpack-plugin');
 
-  webpackBaseConfig.plugins.push(
-    new CompressionWebpackPlugin({
-      asset: '[path].gz[query]',
-      algorithm: 'gzip',
-      test: new RegExp('\\.(' + config.build.productionGzipExtensions.join('|') + ')$'),
-      threshold: 10240,
-      minRatio: 0.8,
-    }));
+  webpackBaseConfig.plugins.push(new CompressionWebpackPlugin({
+    asset: '[path].gz[query]',
+    algorithm: 'gzip',
+    test: new RegExp('\\.(' + config.build.productionGzipExtensions.join('|') + ')$'),
+    threshold: 10240,
+    minRatio: 0.8,
+  }));
 }
 
 module.exports = webpackBaseConfig;
