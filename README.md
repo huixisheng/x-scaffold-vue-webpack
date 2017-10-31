@@ -27,11 +27,6 @@ $ npm run dev
 
 ### 项目构建 ###
 
-统一项目路径
-
-``` bash
-$ ln -s ~/Mzxd/** ~/ProjectRoot/
-```
 
 ``` bash
 $ npm run build

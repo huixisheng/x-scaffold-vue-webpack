@@ -1,6 +1,7 @@
 // see http://vuejs-templates.github.io/webpack for documentation.
 const path = require('path');
 const pkg = require('../package.json');
+const pkgName = pkg.name.replace('@x-scaffold/', '');
 // var getIp = require('../build/utils').getIp; // 出现死循环
 
 // https://www.npmjs.com/package/ip
@@ -33,8 +34,8 @@ const RootPaths = require('../build/lib/RootPaths');
 const rootPathsInstance = new RootPaths(projectRoot);
 const projectAssetsPath = rootPathsInstance.getModulesAssetsPath('cosmeapi', projectType);
 
-const devManifestPath = path.join(projectAssetsPath, `test/webpack-${pkg.name}.json`);
-const buildManifestPath = path.join(projectAssetsPath, `webpack-${pkg.name}.json`);
+const devManifestPath = path.join(projectAssetsPath, `test/webpack-${pkgName}.json`);
+const buildManifestPath = path.join(projectAssetsPath, `webpack-${pkgName}.json`);
 
 module.exports = {
   build: {
@@ -42,7 +43,7 @@ module.exports = {
     env: require('./prod.env'),
     index: path.resolve(__dirname, '../dist/index.html'),
     assetsRoot: path.resolve(__dirname, '../dist'),
-    assetsSubDirectory: pkg.name,
+    assetsSubDirectory: pkgName,
     cdnAssestSubPath: cdnAssestPath,
     assetsPublicPath: `http://p1.cosmeapp.com/`,
     productionSourceMap: false,
@@ -65,7 +66,7 @@ module.exports = {
     index: path.resolve(__dirname, '../dist/index.html'),
     autoOpenBrowser: true,
     assetsRoot: path.resolve(__dirname, '../dist'),
-    assetsSubDirectory: pkg.name,
+    assetsSubDirectory: pkgName,
     assetsPublicPath: `//${getIp()}:${PORT}/`,
     proxyTable: {
       '/prepath': {

@@ -24,5 +24,8 @@ module.exports = {
       "message": "Author"
     },
   },
+  "filters": {
+    "node_modules/**/*": false
+  },
   "completeMessage": "To get started:\n\n  {{^inPlace}}cd {{destDirName}}\n  {{/inPlace}}npm install\n  npm run dev\nnpm run dev:docs\n\nDocumentation can be found at https://github.com/huixisheng/x-scaffold-vue-webpack"
 };
