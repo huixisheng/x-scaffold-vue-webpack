@@ -100,7 +100,8 @@ app.use(hotMiddleware);
 // compiler.apply(new DashboardPlugin());
 
 // serve pure static assets
-const staticPath = path.posix.join('/', config.dev.assetsSubDirectory);
+// const staticPath = path.posix.join('/', config.dev.assetsSubDirectory);
+const staticPath = path.posix.join('/');
 app.use(staticPath, express.static('./static'));
 
 let uri = 'http://' + utils.getIp() + ':' + PORT;
@@ -124,7 +125,7 @@ devMiddleware.waitUntilValid(() => {
       _reject(err);
     }
     process.env.PORT = port;
-    uri = 'http://localhost:' + port;
+    uri = 'http://' + utils.getIp() + ':' + PORT;
     console.log('> Listening at ' + uri + '\n');
     // when env is testing, don't need open it
     if (autoOpenBrowser && process.env.NODE_ENV !== 'testing') {
