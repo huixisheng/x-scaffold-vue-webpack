@@ -34,9 +34,6 @@ module.exports = {
       assets: resolve('src/assets'),
       api: resolve('src/api'),
       utils: resolve('src/utils'),
-      docs: resolve('docs'),
-      // @todo设置
-      theme: resolve('docs/theme/at-ui'),
     },
   },
   // https://doc.webpack-china.org/configuration/stats/

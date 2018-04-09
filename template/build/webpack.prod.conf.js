@@ -23,7 +23,7 @@ const pkg = require('../package.json');
 const qiniuPluginAssets = new QiniuPlugin({
   ACCESS_KEY: xConfig.qiniuConfig.accessKey,
   SECRET_KEY: xConfig.qiniuConfig.secretKey,
-  bucket: 'deploy',
+  bucket: xConfig.qiniuConfig.bucket,
   path: '',
   include: [new RegExp(pkg.name + '/')],
   // include 可选项。你可以选择上传的文件，比如['main.js']``或者[/main/]`
@@ -161,6 +161,20 @@ const webpackBaseConfig = merge(baseWebpackConfig, {
           default:
             return config.build.assetsPublicPath + val;
         }
+      },
+      done(manifest) {
+        // eslint-disable-next-line
+        const { requestAssets } = require('request-assets');
+        const cacheManifestAssets = config.build.manifestPath.replace('.json', '-cache.json');
+        requestAssets({
+          webpack: JSON.stringify(manifest.assets),
+          path: path.basename(config.build.manifestPath, '.json'),
+          module: config.build.projectModule,
+        }, cacheManifestAssets).then((body) => {
+          console.log(body);
+        }).catch((error) => {
+          console.log(error);
+        });
       },
     }),
     // new WebpackSftpClient(Object.assign(xConfig.sftp,

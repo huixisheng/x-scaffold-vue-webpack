@@ -1,6 +1,7 @@
 // see http://vuejs-templates.github.io/webpack for documentation.
 const path = require('path');
 const pkg = require('../package.json');
+const xConfig = require('x-config-deploy').getConfig();
 const pkgName = pkg.name.replace('@x-scaffold/', '');
 // var getIp = require('../build/utils').getIp; // 出现死循环
 
@@ -20,19 +21,12 @@ function getIp() {
   return IPv4;
 }
 
-const PORT = 8080;
+const portFinderSync = require('portfinder-sync');
+const PORT = portFinderSync.getPort(8080);
 const cdnAssestPath = 's/webpack/';
-const projectType = 'MHome';
+const projectType = 'Api';
 
-let projectRoot = '';
-const dirname = __dirname;
-if (dirname.indexOf('cosmeapi/assets') >= 0 ) {
-  projectRoot = path.resolve(dirname, '../../../../');
-}
-
-const RootPaths = require('../build/lib/RootPaths');
-const rootPathsInstance = new RootPaths(projectRoot);
-const projectAssetsPath = rootPathsInstance.getModulesAssetsPath('cosmeapi', projectType);
+const projectAssetsPath = 'dist';
 
 const devManifestPath = path.join(projectAssetsPath, `test/webpack-${pkgName}.json`);
 const buildManifestPath = path.join(projectAssetsPath, `webpack-${pkgName}.json`);
@@ -40,12 +34,14 @@ const buildManifestPath = path.join(projectAssetsPath, `webpack-${pkgName}.json`
 module.exports = {
   build: {
     manifestPath: buildManifestPath,
+    // 对应后台的模块
+    projectModule: 'Api',
     env: require('./prod.env'),
     index: path.resolve(__dirname, '../dist/index.html'),
     assetsRoot: path.resolve(__dirname, '../dist'),
     assetsSubDirectory: pkgName,
     cdnAssestSubPath: cdnAssestPath,
-    assetsPublicPath: `http://p1.cosmeapp.com/`,
+    assetsPublicPath: `//p1.cosmeapp.com/`,
     productionSourceMap: false,
     // Gzip off by default as many popular static hosts such as
     // Surge or Netlify already gzip all static assets for you.
@@ -66,14 +62,14 @@ module.exports = {
     index: path.resolve(__dirname, '../dist/index.html'),
     autoOpenBrowser: true,
     assetsRoot: path.resolve(__dirname, '../dist'),
-    assetsSubDirectory: pkgName,
+    assetsSubDirectory: 'static',
     assetsPublicPath: `//${getIp()}:${PORT}/`,
     proxyTable: {
-      '/prepath': {
-        target: 'http://xx.xx.com',
+      '/api': {
+        target: 'http://proxy.com',
         changeOrigin: true,
         pathRewrite: {
-          '^/prepath': '/prepath',
+          '^/api': '/api',
         },
       },
     },
@@ -88,14 +84,10 @@ module.exports = {
   dll: {
     entry: {
       vendor: [
-        // 'vue/dist/vue.common.js',
         'vue/dist/vue.esm.js',
         'vue-router',
-        'element-ui',
-        'core-js',
         'axios',
         'vue-lazyload',
-        'qs',
       ],
     },
   },

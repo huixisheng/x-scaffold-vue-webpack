@@ -1,8 +1,13 @@
 import Vue from 'vue';
+import vueTap from 'v-tap';
+import Packages from 'components/index';
+import 'normalize.css/normalize.css';
 import 'assets/app.css';
-import './main-page';
-import App from './App';
 import router from './routers';
+import App from './App';
+
+Vue.use(vueTap);
+Vue.use(Packages);
 
 /* eslint-disable no-new */
 new Vue({

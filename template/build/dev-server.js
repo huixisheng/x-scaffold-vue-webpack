@@ -100,8 +100,7 @@ app.use(hotMiddleware);
 // compiler.apply(new DashboardPlugin());
 
 // serve pure static assets
-// const staticPath = path.posix.join('/', config.dev.assetsSubDirectory);
-const staticPath = path.posix.join('/');
+const staticPath = path.posix.join('/', config.dev.assetsSubDirectory);
 app.use(staticPath, express.static('./static'));
 
 let uri = 'http://' + utils.getIp() + ':' + PORT;

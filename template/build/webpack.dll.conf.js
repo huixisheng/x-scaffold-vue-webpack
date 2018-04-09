@@ -1,8 +1,8 @@
 const path = require('path');
 const webpack = require('webpack');
-// const HtmlWebpackPlugin = require('html-webpack-plugin');
 const config = require('../config/index');
 
+// TODO 上传服务器
 module.exports = {
   entry: config.dll.entry,
   output: {
