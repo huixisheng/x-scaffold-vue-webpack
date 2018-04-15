@@ -9,8 +9,6 @@ const chalk = require('chalk');
 const webpack = require('webpack');
 const config = require('../config');
 const webpackConfig = require('./webpack.prod.conf');
-// var webpackConfigDebug = require('./webpack.prod.debug.conf')
-// const buildCdn = require('./lib/build-cdn');
 
 const spinner = ora('building for production...');
 spinner.start();

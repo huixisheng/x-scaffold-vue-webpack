@@ -9,8 +9,7 @@ export default {
   name: 'app',
   watch: {
     $route: () => {
-      // console.log(to);
-      // console.log(from);
+      // 路由变化 from to
     },
   },
   // 属于组件内的钩子
@@ -19,7 +18,6 @@ export default {
     next();
   },
   afterEach() {
-    // debugger;
   },
 };
 </script>

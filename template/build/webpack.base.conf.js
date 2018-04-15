@@ -1,13 +1,14 @@
 const path = require('path');
 const utils = require('./utils');
 const config = require('../config');
-const webpackConfig = require('@x-scaffold/webpack-config');
+const webpackEntry = require('@x-scaffold/webpack-entry');
+const webpackVueStyle = require('@x-scaffold/webpack-vue-style');
 const webpack = require('webpack');
 
 function resolve(dir) {
   return path.join(__dirname, '..', dir);
 }
-const entry = webpackConfig.getEntriesJs();
+const entry = webpackEntry.getEntriesJs(['./pages/**/*.js', './src/main.js'], './pages/');
 
 /* eslint-disable max-len */
 module.exports = {
@@ -64,7 +65,8 @@ module.exports = {
         test: /\.vue$/,
         loader: 'vue-loader',
         options: {
-          loaders: webpackConfig.loaders,
+          loaders: webpackVueStyle.loaders,
+          cssSourceMap: false,
           // other vue-loader options go here
         },
       },

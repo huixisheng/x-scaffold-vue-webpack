@@ -1,5 +1,6 @@
 const utils = require('./utils');
-const webpackConfig = require('@x-scaffold/webpack-config');
+const webpackEntry = require('@x-scaffold/webpack-entry');
+const webpackVueStyle = require('@x-scaffold/webpack-vue-style');
 const webpack = require('webpack');
 const config = require('../config');
 const merge = require('webpack-merge');
@@ -11,7 +12,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin');
 const StyleLintPlugin = require('stylelint-webpack-plugin');
 
-const IP = webpackConfig.getIp();
+const IP = require('ip').address();
 
 const port = process.env.PORT || config.dev.port;
 
@@ -22,9 +23,9 @@ Object.keys(baseWebpackConfig.entry).forEach(function (name) {
 
 module.exports = merge(baseWebpackConfig, {
   module: {
-    rules: webpackConfig.styleLoaders({
+    rules: webpackVueStyle.styleLoaders({
       sourceMap: config.dev.cssSourceMap,
-      extract: true,
+      extract: false,
     }),
   },
   output: {
@@ -105,7 +106,7 @@ module.exports = merge(baseWebpackConfig, {
   ],
 });
 
-const pages = webpackConfig.getEntriesHtml();
+const pages = webpackEntry.getEntriesHtml(['./pages/**/*.js', './src/main.js'], './pages/');
 pages.forEach((value) => {
   module.exports.plugins.push(new HtmlWebpackPlugin(value));
 });

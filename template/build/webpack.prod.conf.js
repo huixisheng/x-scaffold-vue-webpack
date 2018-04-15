@@ -4,13 +4,14 @@ const webpack = require('webpack');
 const config = require('../config');
 const merge = require('webpack-merge');
 const baseWebpackConfig = require('./webpack.base.conf');
+const webpackEntry = require('@x-scaffold/webpack-entry');
 const xConfig = require('x-config-deploy').getConfig();
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin');
 const WebpackAssetsManifest = require('webpack-assets-manifest');
-const webpackConfig = require('@x-scaffold/webpack-config');
+const webpackVueStyle = require('@x-scaffold/webpack-vue-style');
 const QiniuPlugin = require('qiniu-webpack-plugin');
 const pkg = require('../package.json');
 // const DashboardPlugin = require('webpack-dashboard/plugin');
@@ -40,7 +41,7 @@ const env = process.env.NODE_ENV === 'testing'
 
 const webpackBaseConfig = merge(baseWebpackConfig, {
   module: {
-    rules: webpackConfig.styleLoaders({
+    rules: webpackVueStyle.styleLoaders({
       sourceMap: config.build.productionSourceMap,
       extract: true,
     }),
@@ -206,14 +207,14 @@ if (config.build.productionGzip) {
 
 module.exports = webpackBaseConfig;
 
-const pages = webpackConfig.getEntriesHtmlProd();
+const pages = webpackEntry.getEntriesHtml(['./pages/**/*.js', './src/main.js'], './pages/');
 pages.forEach((value) => {
   module.exports.plugins.push(new HtmlWebpackPlugin(value));
 });
 
 if (config.build.bundleAnalyzerReport) {
   const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
-  webpackConfig.plugins.push(new BundleAnalyzerPlugin({
+  webpackBaseConfig.plugins.push(new BundleAnalyzerPlugin({
     analyzerPort: 10000,
   }));
 }

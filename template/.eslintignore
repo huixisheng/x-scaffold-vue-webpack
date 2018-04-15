@@ -1,5 +1,3 @@
 !build/*.js
 config/*.js
 !.eslintrc.js
-src/icons/*.js
-docs/theme/**
