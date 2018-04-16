@@ -26,10 +26,8 @@ const PORT = portFinderSync.getPort(8080);
 const cdnAssestPath = 's/webpack/';
 const projectType = 'Api';
 
-const projectAssetsPath = 'dist';
-
-const devManifestPath = path.join(projectAssetsPath, `test/webpack-${pkgName}.json`);
-const buildManifestPath = path.join(projectAssetsPath, `webpack-${pkgName}.json`);
+const devManifestPath = path.join(`test/webpack-${pkgName}.json`);
+const buildManifestPath = path.join(`webpack-${pkgName}.json`);
 
 module.exports = {
   build: {
@@ -71,6 +69,9 @@ module.exports = {
         pathRewrite: {
           '^/api': '/api',
         },
+        // cookieDomainRewrite: {
+        //   '*': getIp(),
+        // },
       },
     },
     // CSS Sourcemaps off by default because relative paths are "buggy"

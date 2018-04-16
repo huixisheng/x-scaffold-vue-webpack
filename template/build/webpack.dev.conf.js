@@ -92,21 +92,15 @@ module.exports = merge(baseWebpackConfig, {
         // console.log(stats); // Compilation stats
       },
     }),
-
     // https://github.com/glenjamin/webpack-hot-middleware#installation--usage
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),
-    // https://github.com/ampedandwired/html-webpack-plugin
-    // new HtmlWebpackPlugin({
-    //   filename: 'index.html',
-    //   template: 'index.html',
-    //   inject: true
-    // }),
     new FriendlyErrorsPlugin(),
   ],
 });
 
 const pages = webpackEntry.getEntriesHtml(['./pages/**/*.js', './src/main.js'], './pages/');
+
 pages.forEach((value) => {
   module.exports.plugins.push(new HtmlWebpackPlugin(value));
 });

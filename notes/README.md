@@ -2,6 +2,30 @@
 
 > 相关问题记录
 
+```
+/usr/local/lib/node_modules/webpack/bin/webpack.js:348
+      throw err;
+      ^
+
+TypeError: Cannot read property 'compilation' of undefined
+    at OptimizeCssAssetsWebpackPlugin.apply (/Users/huixisheng/x-scaffold/x-scaffold-vue-webpack/template/node_modules/last-call-webpack-plugin/src/index.js:170:20)
+    at Compiler.apply (/usr/local/lib/node_modules/webpack/node_modules/tapable/lib/Tapable.js:375:16)
+    at webpack (/usr/local/lib/node_modules/webpack/lib/webpack.js:33:19)
+    at processOptions (/usr/local/lib/node_modules/webpack/bin/webpack.js:335:15)
+    at yargs.parse (/usr/local/lib/node_modules/webpack/bin/webpack.js:397:2)
+    at Object.Yargs.self.parse (/usr/local/lib/node_modules/webpack/node_modules/yargs/yargs.js:533:18)
+    at Object.<anonymous> (/usr/local/lib/node_modules/webpack/bin/webpack.js:152:7)
+    at Module._compile (module.js:652:30)
+    at Object.Module._extensions..js (module.js:663:10)
+    at Module.load (module.js:565:32)
+    at tryModuleLoad (module.js:505:12)
+    at Function.Module._load (module.js:497:3)
+    at Function.Module.runMain (module.js:693:10)
+    at startup (bootstrap_node.js:188:16)
+    at bootstrap_node.js:609:3
+```
+
+
 For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
 
 ## 问题 ##

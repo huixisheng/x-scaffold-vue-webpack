@@ -2,6 +2,17 @@
 
 > 根据`vue init webpack`生成的模块修改，支持多页面配置
 
+## 功能 ##
+- 引出pack-axios处理重复请求
+- 支持x-do命令生成路由和组件依赖引入
+- 资源直接构建到七牛
+- manifest构建到服务器
+- 多页入口
+
+## TODO ##
+- eslint-plugin-vue
+- webpack4
+- vue-cli3
 
 ## 安装 ##
 
