@@ -21,9 +21,9 @@ const pkg = require('../package.json');
 // const StatsWriterPlugin = require('webpack-stats-plugin').StatsWriterPlugin;
 
 const qiniuPluginAssets = new QiniuPlugin({
-  ACCESS_KEY: xConfig.qiniuConfig.accessKey,
-  SECRET_KEY: xConfig.qiniuConfig.secretKey,
-  bucket: xConfig.qiniuConfig.bucket,
+  ACCESS_KEY: xConfig.qiniuLibConfig.accessKey,
+  SECRET_KEY: xConfig.qiniuLibConfig.secretKey,
+  bucket: xConfig.qiniuLibConfig.bucket,
   path: '',
   include: [new RegExp(pkg.name + '/')],
   // include 可选项。你可以选择上传的文件，比如['main.js']``或者[/main/]`

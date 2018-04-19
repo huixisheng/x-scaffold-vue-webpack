@@ -26,8 +26,8 @@ const PORT = portFinderSync.getPort(8080);
 const cdnAssestPath = 's/webpack/';
 const projectType = 'Api';
 
-const devManifestPath = path.join(`test/webpack-${pkgName}.json`);
-const buildManifestPath = path.join(`webpack-${pkgName}.json`);
+const devManifestPath = path.join(`test/${pkgName}.json`);
+const buildManifestPath = path.join(`${pkgName}.json`);
 
 module.exports = {
   build: {
@@ -69,6 +69,14 @@ module.exports = {
         pathRewrite: {
           '^/api': '/api',
         },
+        // TODO
+        // https://github.com/chimurai/http-proxy-middleware#context-matching
+        // https://vuejs-templates.github.io/webpack/proxy.html
+        // https://www.jianshu.com/p/95b2caf7e0da
+        // filter: function (pathname, req) {
+        //   console.log(pathname);
+        //   return pathname.match('^/api') && req.method === 'GET'
+        // },
         // cookieDomainRewrite: {
         //   '*': getIp(),
         // },
@@ -84,10 +92,11 @@ module.exports = {
   // 配置dll
   dll: {
     entry: {
-      vendor: [
+      'vendor': [
         'vue/dist/vue.esm.js',
         'vue-router',
-        'axios',
+        'v-tap',
+        'pack-axios',
         'vue-lazyload',
       ],
     },

@@ -37,6 +37,11 @@ module.exports = {
       utils: resolve('src/utils'),
     },
   },
+  externals: {
+    // 指定别名
+    // vue: 'Vue',
+    // '@x-scaffold/adminui': 'AdminUi',
+  },
   // https://doc.webpack-china.org/configuration/stats/
   // devServer: {
   //   stats: {

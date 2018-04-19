@@ -1,5 +1,10 @@
 # x-scaffold-vue-webpack
 
+ERROR in vendor-library-dll-3ccda9.js from UglifyJs
+Unexpected token: operator (-) [vendor-library-dll-3ccda9.js:1,10]
+
+vendor-library命名问题
+
 > 相关问题记录
 
 ```

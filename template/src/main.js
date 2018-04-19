@@ -1,6 +1,8 @@
 // 国产的安卓设备不支持find, find-index。然而文档显示安卓4.0的chrome是支持，配置env也无效
 import 'core-js/fn/array/find';
 import 'core-js/fn/array/find-index';
+// object-assign 安卓设备不支持
+import 'core-js/fn/object/assign';
 import Vue from 'vue';
 import vueTap from 'v-tap';
 import Packages from 'components/index';

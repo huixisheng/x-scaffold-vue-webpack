@@ -1,10 +1,9 @@
 import Vue from 'vue';
-import App from './index.vue';
+import App from './app';
 
 Vue.config.productionTip = false;
 /* eslint-disable no-new */
 new Vue({
   template: '<App/>',
-  // template: '<acc></acc>',
-  // components: { acc },
-}).$mount('#app1');
+  components: { App },
+}).$mount('#app');

@@ -3,10 +3,6 @@ import Router from 'vue-router';
 
 const HomeIndex = () => import('views/home/index');
 
-// 以下子路由自己添加
-// import childrenHello from './children/hello';
-// import childrenHome from './children/home';
-
 Vue.use(Router);
 // 配置路由前缀
 const BASE_PARH = '/f';

@@ -5,7 +5,12 @@ const install = function (Vue) {
   //   Vue.component(component.name, component);
   // });
   Object.keys(packages).forEach((key) => {
-    Vue.component(packages[key].name, packages[key]);
+    const name = packages[key].name;
+    if (!name) {
+      console.error('undefine component name');
+    } else {
+      Vue.component(name, packages[key]);
+    }
   });
 };
 
