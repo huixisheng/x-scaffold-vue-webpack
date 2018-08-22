@@ -1,37 +1,59 @@
 import Vue from 'vue';
 import Router from 'vue-router';
+import Layout from 'src/layouts/base/Layout';
 
-const HomeIndex = () => import('views/home/index');
+import routerConfig from './config';
+import childrenSnippet from './children/snippet';
+import childrenDashboard from './children/dashboard';
+
 
 Vue.use(Router);
-// 配置路由前缀
+// 配置路由前缀。根据后端修改
 const BASE_PARH = '/f';
 
 const routes = [
   {
-    path: '/home/index',
+    path: '/dashboard',
+    component: Layout,
     alias: '/',
-    name: 'index',
+    redirect: '/dashboard/index',
+    hidden: true,
+    name: 'dashboard',
+    children: routerConfig.setRouter(childrenDashboard),
     meta: {
-      title: '首页',
+      title: 'dashboard',
     },
-    component: HomeIndex,
   },
+  {
+    path: '/dev',
+    component: Layout,
+    alwaysShow: true,
+    hidden: false,
+    meta: {
+      title: 'snippet',
+      icon: 'homepage',
+      roles: ['editor', 'admin'],
+      noCache: true,
+    },
+    name: 'dev',
+    children: routerConfig.setRouter(childrenSnippet),
+  },
+  // {
+  //   path: '*',
+  //   name: '404',
+  //   meta: {
+  //     title: '404',
+  //   },
+  //   component: NotFound,
+  // },
 ];
 
 
-if (process.env.NODE_ENV === 'development') {
-  routes.push({
-    path: '/demo',
-    name: 'Hello',
-    // eslint-disable-next-line
-    component: require('views/hello/Hello').default,
-  });
-}
-
-export default new Router({
+const router = new Router({
   mode: 'history',
-  routes,
   base: BASE_PARH,
-  linkActiveClass: 'router-active',
+  // TODO base
+  routes,
 });
+
+export default router;

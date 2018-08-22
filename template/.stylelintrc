@@ -8,6 +8,8 @@
     "declaration-block-trailing-semicolon": null,
     "no-empty-source": null,
     "color-hex-case": null,
-    "rule-empty-line-before": ["always-multi-line", { ignore: ["after-comment", "inside-block"] }]
+    "no-missing-end-of-source-newline": null,
+    "rule-empty-line-before": null,
+    "at-rule-empty-line-before": null
   }
 }

@@ -1,7 +1,8 @@
-
-/* 使用x-do-cli的命令 x component 自动生成 */
+/* 使用x-do-component自动生成，修改会被覆盖 */
+import Dev from './dev';
 
 const packages = {
+  Dev,
 };
 
 export default packages;

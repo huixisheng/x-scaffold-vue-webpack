@@ -1,0 +1,10 @@
+[
+  {
+    "path": "page1/index.html",
+    "name": "page1/index"
+  },
+  {
+    "path": "page2/page2.html",
+    "name": "page2/page2"
+  }
+]

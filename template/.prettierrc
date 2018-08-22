@@ -1,0 +1,6 @@
+{
+  "trailing-comma": "all",
+  "arrow-parens": "always",
+  "printWidth": 160,
+  "preserve": "never"
+}
