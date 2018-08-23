@@ -1,10 +1,12 @@
 {
   "name": "x-scaffold-vue-webpack",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "license": "MIT",
-  "description": "根据`vue init webpack`生成的模块修改，支持多页面配置",
+  "description": "根据`vue/cli`生成的自定义scaffold",
   "scripts": {},
   "devDependencies": {
-    "vue-cli": "^2.8.2"
+    "@vue/cli": "^3.0.0",
+    "@vue/cli-init": "^3.0.0",
+    "@vue/cli-service": "^3.0.0"
   }
 }

@@ -1,5 +1,15 @@
 # x-scaffold-vue-webpack
 
+
+## TODO ##
+- eslint-plugin-vue
+- webpack4
+- vue-cli3
+
+## 相关参考文档 ##
+- https://babeljs.io/docs/en/next/babel-preset-env.html
+- https://github.com/vuejs/vue-docs-zh-cn/blob/master/vue-babel-preset-app/README.md
+
 ERROR in vendor-library-dll-3ccda9.js from UglifyJs
 Unexpected token: operator (-) [vendor-library-dll-3ccda9.js:1,10]
 

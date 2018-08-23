@@ -1,7 +1,11 @@
 # x-scaffold-vue-webpack
 
-
 ## 修改记录 ##
+### 2018-08-23 ###
+- [*] 根据`vue init huixisheng/x-scaffold-vue-admin`初始化并修改，整合原来的`0.0.x`版本
+
+
+## 0.0.x修改记录 ##
 
 ### 2017-08-27  ###
 - [!] 移除`laravel-mix` 单独维护
