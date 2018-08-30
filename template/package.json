@@ -1,5 +1,5 @@
 {
-  "name": "name",
+  "name": "{{name}}",
   "version": "0.0.1",
   "description": "{{description}}",
   "private": true,
@@ -58,8 +58,8 @@
     "@vue/cli-service": "^3.0.1",
     "@vue/eslint-config-prettier": "^3.0.1",
     "@vue/test-utils": "^1.0.0-beta.15",
-    "@x-scaffold/webpack-config": "0.0.4",
-    "@x-scaffold/webpack-entry": "0.0.2",
+    "@x-scaffold/webpack-config": "^0.0.4",
+    "@x-scaffold/webpack-entry": "^0.0.3",
     "autodll-webpack-plugin": "^0.4.2",
     "babel-preset-env": "^1.7.0",
     "babel-preset-stage-2": "^6.24.1",
@@ -88,7 +88,7 @@
     "stylelint-webpack-plugin": "^0.10.5",
     "vue-template-compiler": "^2.5.17",
     "webpack-assets-manifest": "^3.0.2",
-    "x-config-deploy": "0.0.4"
+    "x-config-deploy": "^0.0.5"
   },
   "prettier": {
     "singleQuote": true

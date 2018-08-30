@@ -7,16 +7,16 @@ const devServer = require('./config/webpack-dev-server');
 const entryMultupage = require('./config/entry-multipage');
 const qiniuWebpackPlugin = require('./config/qiniu-plugin');
 const { getEnvConfig, publicPath } = require('./config/utils');
-const webpackAssetsManifessInstance = require('./config/deploy-manifest');
+const webpackAssetsManifestInstance = require('./config/deploy-manifest');
 
 function resolve(dir) {
   return path.join(__dirname, dir);
 }
 
 // 支持webpack define
-// process.env.VUE_APP_MZXD_BASE = 'https://ykq.com';
+// process.env.VUE_APP_API_BASE = 'https://ykq.com';
 // if (process.env.NODE_ENV === 'development') {
-//   process.env.VUE_APP_MZXD_BASE = getEnvConfig('ykqBase', 'http://test.ykq.com');
+//   process.env.VUE_APP_API_BASE = getEnvConfig('ykqBase', 'http://test.ykq.com');
 // }
 
 module.exports = {
@@ -47,8 +47,9 @@ module.exports = {
 
     // const definePlugin = new webpack.DefinePlugin({
     // });
+    // 用于配置替换的apiUrl
     // if (config.mode === 'development') {
-    //   process.env.VUE_APP_XX_BASE = getEnvConfig('mzxdBase', 'http://xx.com');
+    //   process.env.VUE_APP_XX_BASE = getEnvConfig('apiBase', 'http://xx.com');
     // }
 
     config.externals = {
@@ -107,7 +108,7 @@ module.exports = {
       // config.output.publicPath = publicPath;
       // https://github.com/vuejs/vue-cli/issues/1608
       config.plugins.push(qiniuWebpackPlugin);
-      config.plugins.push(webpackAssetsManifessInstance);
+      config.plugins.push(webpackAssetsManifestInstance);
     }
   },
 };
