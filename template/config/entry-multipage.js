@@ -12,7 +12,7 @@ const pagesJson = [];
 Object.entries(entries).forEach(([key, value], index) => {
   const filename = key + '.html';
   const entry = 'multipage/' + value;
-  let template =  value.replace(path.extname(value), '.html');
+  let template =  entry.replace(path.extname(entry), '.html');
   if (!fs.existsSync(path.join(process.cwd(), template))) {
     template = 'public/index.html';
   }
