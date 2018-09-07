@@ -3,15 +3,16 @@ import Router from 'vue-router';
 import Layout from 'src/layouts/base/Layout';
 
 import routerConfig from './config';
-import childrenSnippet from './children/snippet';
 import childrenDashboard from './children/dashboard';
 
 
+// 以下子路由自己添加
+
 Vue.use(Router);
 // 配置路由前缀。根据后端修改
-const BASE_PARH = '/f';
+const BASE_PATH = '/f';
 
-const routes = [
+export const routes = [
   {
     path: '/dashboard',
     component: Layout,
@@ -23,20 +24,6 @@ const routes = [
     meta: {
       title: 'dashboard',
     },
-  },
-  {
-    path: '/dev',
-    component: Layout,
-    alwaysShow: true,
-    hidden: false,
-    meta: {
-      title: 'snippet',
-      icon: 'homepage',
-      roles: ['editor', 'admin'],
-      noCache: true,
-    },
-    name: 'dev',
-    children: routerConfig.setRouter(childrenSnippet),
   },
   // {
   //   path: '*',
@@ -51,7 +38,7 @@ const routes = [
 
 const router = new Router({
   mode: 'history',
-  base: BASE_PARH,
+  base: BASE_PATH,
   // TODO base
   routes,
 });

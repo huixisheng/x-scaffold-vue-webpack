@@ -9,6 +9,25 @@ const qiniuWebpackPlugin = require('./config/qiniu-plugin');
 const { getEnvConfig, publicPath } = require('./config/utils');
 const webpackAssetsManifestInstance = require('./config/deploy-manifest');
 
+class WebpackPluginXdo {
+  // constructor() {
+  // }
+
+  apply(compiler) {
+    compiler.hooks.entryOption.tap('WebpackPluginXdo', () => {
+      require('child_process').exec('x-do-view');
+      require('child_process').exec('x-do-component');
+      // console.log('compiler.hooks.entryOption.tap entryOption. 在 webpack 选项中的 entry 配置项 处理过之后，执行插件。');
+    });
+    // compiler.hooks.watchRun.tap('watchRun', (compiler) => {
+    //   require('child_process').exec('x-do-view');
+    //   require('child_process').exec('x-do-component');
+    //   // console.dir(compiler);
+    //   console.log('compiler.hooks.watchRun.tap watchRun. 监听模式下，一个新的编译(compilation)触发之后，执行一个插件，但是是在实际编译开始之前。');
+    // });
+  }
+}
+
 function resolve(dir) {
   return path.join(__dirname, dir);
 }
@@ -31,8 +50,15 @@ module.exports = {
   devServer,
 
   // tweak internal webpack configuration.
-  // see https://github.com/vuejs/vue-cli/blob/dev/docs/webpack.md
   chainWebpack: (config) => {
+    // https://cli.vuejs.org/guide/webpack.html#adding-a-new-loader
+    // https://github.com/neutrinojs/webpack-chain/tree/v3
+    config.module
+      .rule('json5')
+      .test(/\.json5$/)
+      .use('json5-loader')
+      .loader('json5-loader')
+      .end();
     // config
     //   .plugin('define')
     //   .tap((args) => {
@@ -60,10 +86,6 @@ module.exports = {
 
     // delete config.resolve.alias['@'];
     config.resolve.alias.src = resolve('src');
-    config.resolve.alias.packages = resolve('src/packages');
-    config.resolve.alias.components = resolve('src/components');
-    config.resolve.alias.utils = resolve('src/utils');
-    config.resolve.alias.api = resolve('src/api');
 
     // https://github.com/asfktz/autodll-webpack-plugin/issues/58
     config.plugins.push(new AutoDllPlugin({
@@ -110,5 +132,6 @@ module.exports = {
       config.plugins.push(qiniuWebpackPlugin);
       config.plugins.push(webpackAssetsManifestInstance);
     }
+    config.plugins.push(new WebpackPluginXdo());
   },
 };

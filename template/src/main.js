@@ -6,7 +6,7 @@ import 'core-js/fn/object/assign';
 import Vue from 'vue';
 import VueLazyload from 'vue-lazyload';
 import vueTap from 'v-tap';
-import Packages from 'components/index';
+import Packages from 'src/components/index';
 import 'normalize.css/normalize.css';
 import 'src/assets/app.css';
 import apiInstance from 'src/models/index';

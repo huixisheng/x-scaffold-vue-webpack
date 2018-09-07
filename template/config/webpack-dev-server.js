@@ -10,9 +10,12 @@ const devServer = {
   watchOptions: {
     poll: true,
   },
+  // 一切服务都启用 gzip 压缩
+  compress: true,
   progress: true,
   open: true,
-  openPage: './',
+  // vue-cli3无效
+  openPage: '/index/',
   // TDOO fix socket实时预览的问题 https://github.com/vuejs/vue-cli/pull/2230
   // 见/node_modules/@vue/cli-service/lib/commands/serve.js const sockjsUrl = publicUrl
   // host: IP, | '0.0.0.0',
@@ -25,6 +28,8 @@ const devServer = {
     warnings: true,
     errors: true,
   },
+  // 用于监听的 Unix socket（而不是 host） vue-cli下无效？
+  socket: 'socket',
   // https://webpack.docschina.org/configuration/dev-server/#devserver-uselocalip
   useLocalIp: true,
   historyApiFallback: true,
