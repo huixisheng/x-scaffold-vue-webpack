@@ -1,5 +1,4 @@
-/* 使用x-do-component自动生成，修改会被覆盖 */
+/* generate by x-do-component */
 import HelloWorld from './HelloWorld';
-
 
 export default HelloWorld;

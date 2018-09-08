@@ -11,20 +11,17 @@ const webpackAssetsManifestInstance = require('./config/deploy-manifest');
 
 class WebpackPluginXdo {
   // constructor() {
+  //   this.xdoStatus = 'todo';
   // }
-
   apply(compiler) {
     compiler.hooks.entryOption.tap('WebpackPluginXdo', () => {
-      require('child_process').exec('x-do-view');
-      require('child_process').exec('x-do-component');
-      // console.log('compiler.hooks.entryOption.tap entryOption. 在 webpack 选项中的 entry 配置项 处理过之后，执行插件。');
+      require('child_process').exec('./node_modules/.bin/x-do-view');
+      require('child_process').exec('./node_modules/.bin/x-do-component');
     });
-    // compiler.hooks.watchRun.tap('watchRun', (compiler) => {
-    //   require('child_process').exec('x-do-view');
-    //   require('child_process').exec('x-do-component');
-    //   // console.dir(compiler);
-    //   console.log('compiler.hooks.watchRun.tap watchRun. 监听模式下，一个新的编译(compilation)触发之后，执行一个插件，但是是在实际编译开始之前。');
-    // });
+    compiler.hooks.watchRun.tap('WebpackPluginXdo', function (compiler) {
+      require('child_process').exec('./node_modules/.bin/x-do-view');
+      require('child_process').exec('./node_modules/.bin/x-do-component');
+    });
   }
 }
 
@@ -82,6 +79,13 @@ module.exports = {
       // 指定别名
       // "moment": 'moment'
       vue: 'Vue',
+    };
+
+    // 新增的文件没有触发watch-run
+    // https://webpack.docschina.org/configuration/watch/
+    config.watchOptions = {
+      ignored: ['node_modules'],
+      poll: 200,
     };
 
     // delete config.resolve.alias['@'];

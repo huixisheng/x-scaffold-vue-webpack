@@ -8,6 +8,9 @@ import childrenDashboard from './children/dashboard';
 
 // 以下子路由自己添加
 
+// 以下子路由自己添加
+// import childrenundefined from './children/dashboard';
+
 Vue.use(Router);
 // 配置路由前缀。根据后端修改
 const BASE_PATH = '/f';

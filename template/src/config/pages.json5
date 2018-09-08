@@ -6,11 +6,6 @@
     "title": "index/index"
   },
   {
-    "path": "page1/index.html",
-    "name": "page1/index",
-    "title": "page1/index"
-  },
-  {
     "path": "",
     "name": "app",
     "title": "app"

@@ -1,4 +1,4 @@
-/* 使用x-do-component自动生成，修改会被覆盖 */
+/* generate by x-do-component */
 import Dev from './dev';
 
 const packages = {
