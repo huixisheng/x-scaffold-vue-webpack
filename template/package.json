@@ -1,5 +1,5 @@
 {
-  "name": "name",
+  "name": "{{name}}",
   "version": "0.0.1",
   "description": "{{description}}",
   "private": true,
@@ -90,7 +90,7 @@
     "vue-template-compiler": "^2.5.17",
     "webpack-assets-manifest": "^3.0.2",
     "x-config-deploy": "^0.0.5",
-    "x-do-cli": "0.0.12"
+    "x-do-cli": "^0.0.13"
   },
   "prettier": {
     "singleQuote": true

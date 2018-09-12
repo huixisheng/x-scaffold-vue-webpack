@@ -9,7 +9,12 @@
   <h2>单页入口</h2>
   <ul>
     <li v-for="route in routes" :key="route.path">
-      <a :href="route.path" v-text="route.meta.title"></a>
+      <a :href="route.path" v-text="showSpaTitile(route)"></a>
+      <ol v-if="route.children && route.children.length">
+        <li v-for="subRoute in route.children" :key="subRoute.path">
+          <a :href="subRoute.path" v-text="showSpaTitile(subRoute)"></a>
+        </li>
+      </ol>
     </li>
   </ul>
 </div>
@@ -34,7 +39,12 @@ export default {
 
   },
   methods: {
-
+    showSpaTitile(route) {
+      if (route.meta && route.meta.title) {
+        return route.meta.title;
+      }
+      return route.path;
+    },
   },
 };
 </script>
