@@ -25,7 +25,7 @@ import pages from 'src/config/pages.json5';
 import { routes } from 'src/routers/index';
 
 export default {
-  title: '页面标题',
+  title: '所有页面入口',
   data() {
     return {
       pages,
